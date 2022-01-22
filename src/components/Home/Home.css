@@ -1,0 +1,55 @@
+body {
+  background-color: #000000;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+}
+.grandpa__header {
+  /* border: 1px solid #fff; */
+  margin-bottom: 20px;
+}
+.grandpa__header img {
+  width: 200px;
+}
+.grandpa__wrapper {
+  padding: 30px 60px;
+}
+.grandpa__content_wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.grandpa__main_content_wrapper {
+  width: 60%;
+  border: 15px solid #262626;
+  background: #262626;
+  background-image: url("../../assets/images/background.png");
+  background-position: center left;
+  min-height: 450px;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.grandpa__faq_wrapper {
+  width: 40%;
+  padding: 0 20px 20px;
+}
+
+@media screen and (max-width: 680px) {
+  .grandpa__wrapper {
+    padding: 0px;
+
+  }
+  .grandpa__content_wrapper {
+    flex-direction: column;
+  }
+  .grandpa__faq_wrapper,
+  .grandpa__main_content_wrapper {
+    width: 100%;
+    padding: 0;
+    margin: 10px 20px;
+  }
+}
