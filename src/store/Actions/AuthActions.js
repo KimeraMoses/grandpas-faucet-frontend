@@ -2,32 +2,15 @@ import { baseUrl } from "..";
 import {
   authenticationPending,
   authenticationSuccess,
-  authenticationFail,
-  updateProfilePending,
-  updateProfileSuccess,
-  updateProfileFail,
+
   logout,
   autoAuthenticationSuccess,
   verificationPending,
   verificationFail,
   verificationSuccess,
 } from "../Slices/authSlice";
-import {
-  forgotPasswordFail,
-  forgotPasswordPending,
-  forgotPasswordSuccess,
-  requestVerificationFail,
-  requestVerificationPending,
-  requestVerificationSuccess,
-  UpdatePasswordFail,
-  UpdatePasswordPending,
-  UpdatePasswordSuccess,
-} from "../Slices/passwordSlice";
-import {
-  UserRegistrationPending,
-  UserRegistrationSuccess,
-  UserRegistrationFail,
-} from "../Slices/userRegistrationSlice";
+
+
 
 export const Login = (email) => {
   return async (dispatch) => {
