@@ -2,9 +2,10 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import Grandpa_Logo from "../../assets/images/Grandpa-Logo.png";
 import Faq from "../FAQs/Faq";
+import SignIn from "../SignIn/SignIn";
 import "./Home.css";
 
-const Home = () => {
+const Login = () => {
   return (
     <div className="grandpa__wrapper">
       <div className="grandpa__header">
@@ -14,7 +15,7 @@ const Home = () => {
       </div>
       <div className="grandpa__content_wrapper">
         <div className="grandpa__main_content_wrapper">
-          <Outlet />
+          <SignIn />
         </div>
         <div className="grandpa__faq_wrapper">
           <Faq />
@@ -43,4 +44,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;

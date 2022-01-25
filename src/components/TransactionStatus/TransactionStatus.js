@@ -1,5 +1,5 @@
 import React from "react";
-import "../SignUp/SignUp.css";
+import "../SignIn/SignIn.css";
 import SuccessIcon from '@material-ui/icons/CheckCircleOutline';
 import FailIcon from '@material-ui/icons/CancelOutlined';
 import "./TransactionStatus.css";

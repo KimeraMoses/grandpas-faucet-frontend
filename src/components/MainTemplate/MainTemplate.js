@@ -3,7 +3,7 @@ import CircleChecked from "@material-ui/icons/CheckCircleOutline";
 import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
 import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
-import "../SignUp/SignUp.css";
+import "../SignIn/SignIn.css";
 import Button from "../Button/Button";
 import Otp from "../OTP/Otp";
 import Confirmation from "../Confirmation/Confirmation";

@@ -1,5 +1,5 @@
 import React from "react";
-import "../SignUp/SignUp.css";
+import "../SignIn/SignIn.css";
 import Button from "../Button/Button";
 
 const MetaMask = () => {
