@@ -2,15 +2,16 @@ import { baseUrl } from "..";
 import {
   authenticationPending,
   authenticationSuccess,
-
   logout,
   autoAuthenticationSuccess,
   verificationPending,
   verificationFail,
   verificationSuccess,
+  authenticationFail,
+  createWalletPending,
+  createWalletSuccess,
+  createWalletFail,
 } from "../Slices/authSlice";
-
-
 
 export const Login = (email) => {
   return async (dispatch) => {
@@ -18,7 +19,7 @@ export const Login = (email) => {
     const response = await fetch(`${baseUrl}/accounts/login`, {
       method: "POST",
       body: JSON.stringify({
-        email
+        email,
       }),
       headers: new Headers({
         "Content-type": "application/json",
@@ -26,70 +27,109 @@ export const Login = (email) => {
     });
     if (!response.ok) {
       const error = await response.json();
-      console.log(error)
-     
-      // dispatch(authenticationFail(error));
+      let errorMessage = "";
+      if (error.err === "User is not registered to whiteboard crypto.") {
+        errorMessage = "Account not found, redirecting to whiteboard Crypto...";
+      }
+      dispatch(authenticationFail(errorMessage));
     }
-    const data = await response.json();
-    console.log(data)
+    const res = await response.json();
+    console.log(res);
     dispatch(
       authenticationSuccess({
-        data,
-        user: data.user,
-        token: data.token,
-        uuid: data.uuid,
+        user: res.data,
+        apiToken: res.apiToken,
+        token: res.token,
       })
     );
-
-    SaveTokenInLocalStorage(dispatch, data);
+    const userInfo = {
+      user: res.data,
+      apiToken: res.apiToken,
+      token: res.token,
+    };
+    SaveTokenInLocalStorage(dispatch, userInfo);
   };
 };
 
-export const OTPVerify = (
- otp,
- uuid
-) => {
+export const OTPVerify = (otp, uuid) => {
   return async (dispatch) => {
     dispatch(verificationPending());
     const response = await fetch(`${baseUrl}/accounts/verify-otp/${uuid}`, {
       method: "POST",
       body: JSON.stringify({
-        otp
+        otp,
       }),
       headers: new Headers({
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       }),
     });
 
     if (!response.ok) {
       const error = await response.json();
-      dispatch(verificationFail(error));
+      let Errormessage = "";
+      if (error.msg === "OTP incorrect.") {
+        Errormessage = "OTP entered is incorrect";
+      }
+      dispatch(verificationFail(Errormessage));
+      console.log(error);
     }
     const data = await response.json();
-    dispatch(verificationSuccess(data.status));
+    let Errormessage = "";
+    if (data.msg === "OTP incorrect.") {
+      Errormessage = "OTP entered is incorrect";
+    }
+    dispatch(verificationSuccess(Errormessage));
+
+    // console.log(data)
   };
 };
 
+export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
+  return async (dispatch) => {
+    dispatch(createWalletPending());
+    const response = await fetch(`${baseUrl}/wallet-address/`, {
+      method: "POST",
+      body: JSON.stringify({
+        address,
+        account_uuid,
+      }),
+      headers: new Headers({
+        "Content-type": "application/json",
+        apiKey: "asdfasdfasdfasdfasfasfasdf",
+        apiToken: apiToken,
+        Authorization: "Bearer " + AuthToken,
+      }),
+    });
 
+    if (!response.ok) {
+      const error = await response.json();
+      dispatch(createWalletFail(error));
+      // console.log(error);
+    }
+    const res = await response.json();
+    // console.log(res);
+    dispatch(createWalletSuccess(res.data));
+    localStorage.setItem("Wallet",JSON.stringify(res.data) )
+  };
+};
 
 export const SaveTokenInLocalStorage = (dispatch, userDetails) => {
-  logOutTimer(dispatch, userDetails.expiresIn);
+  // logOutTimer(dispatch, userDetails.expiresIn);
   let AuthTokenDetails = {
     token: userDetails.token,
-    expiresIn: userDetails.expiresIn,
-    expirationtime: userDetails.expirationtime,
+    apiToken: userDetails.apiToken,
   };
   localStorage.setItem("AuthToken", JSON.stringify(AuthTokenDetails));
   localStorage.setItem("CurrentUser", JSON.stringify(userDetails.user));
 };
 
-export const logOutTimer = (dispatch, timer) => {
-  setTimeout(() => {
-    dispatch(logout());
-  }, timer);
-};
+// export const logOutTimer = (dispatch, timer) => {
+//   setTimeout(() => {
+//     dispatch(logout());
+//   }, timer);
+// };
 
-export const AutoAuthenticate = (dispatch, history) => {
+export const AutoAuthenticate = (dispatch) => {
   const AuthToken = localStorage.getItem("AuthToken");
   const CurrentUser = localStorage.getItem("CurrentUser");
   let UserToken = "";
@@ -98,18 +138,19 @@ export const AutoAuthenticate = (dispatch, history) => {
     return;
   }
   UserToken = JSON.parse(AuthToken);
-  let expireDate = new Date(UserToken.expirationtime);
-  let todaysDate = new Date();
-  if (todaysDate > expireDate) {
-    return dispatch(logout());
-  }
+  // let expireDate = new Date(UserToken.expirationtime);
+  // let todaysDate = new Date();
+  // if (todaysDate > expireDate) {
+  //   return dispatch(logout());
+  // }
   let data = {
     token: UserToken.token,
+    apiToken: UserToken.apiToken,
     user: JSON.parse(CurrentUser),
   };
   // validateToken(UserToken)
   dispatch(autoAuthenticationSuccess(data));
 
-  const timer = expireDate.getTime() - todaysDate.getTime();
-  logOutTimer(dispatch, timer);
+  // const timer = expireDate.getTime() - todaysDate.getTime();
+  // logOutTimer(dispatch, timer);
 };

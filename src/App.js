@@ -7,16 +7,22 @@ import SignIn from "./components/SignIn/SignIn";
 import Transactions from "./components/Transactions/Transactions";
 import "./App.css";
 import Login from "./components/Home/Login";
-import React, { Component }  from 'react'; 
+import React, { Component } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AutoAuthenticate } from "./store/Actions/AuthActions";
 function App() {
-  const isLoggedIn = true; 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    AutoAuthenticate(dispatch);
+  }, []);
 
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={<Login/>}/>
+        <Route path="*" element={<Login />} />
         <Route path="/*" element={<Home />}>
-          <Route 
+          <Route
             path="confirm-otp"
             element={
               <MainTemplate
@@ -34,7 +40,7 @@ function App() {
                 title="WhiteBoard Crypto"
                 description="Please click the button below to setup your account on WhiteBoard Crypto."
               />
-            } 
+            }
           />
           <Route
             path="connect-metamask"

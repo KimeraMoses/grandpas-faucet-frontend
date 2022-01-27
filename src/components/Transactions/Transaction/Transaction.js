@@ -1,8 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Transaction.css";
 import Button from "../../Button/Button";
+const currencies = [
+  { value: "MATIC" },
+  { value: "FTM" },
+  { value: "ETH" },
+  { value: "AVAX" },
+  { value: "ONE" },
+  { value: "ETH" },
+  { value: "NEAR" },
+  { value: "CELO" },
+  { value: "BNB" },
+  { value: "FTM" },
+];
 
 const Transaction = (props) => {
+  const Address = localStorage.getItem("Address");
+  const [values, setValues] =useState({
+    amount: "",
+    hash: Address
+  })
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: event.target.value });
+  };
+  const TransactionSubmitHandler=(event)=>{
+    event.preventDefault();
+    //Logic to create transaction goes here
+
+  }
+
   return (
     <div className="grandpa__transaction_wrapper">
       <h4>Transaction</h4>
@@ -11,26 +39,31 @@ const Transaction = (props) => {
         transaction.
       </p>
       <div className="grandpa__transaction_form_wrapper">
-        <form>
+        <form onSubmit={TransactionSubmitHandler}>
           <input
             type="text"
+            value={values.hash}
+            onChange={handleOnChange}
+            name="address"
             placeholder="Mse28M9UQJAZGSSHSXzbFXZKPg1C"
             className="grandpa__input_field"
           />
           <div className="grandpa__multi_column_fields_wrapper">
             <select className="grandpa__multi_column_field">
-                <option>BNB</option>
-                <option>BNB</option>
-                <option>BNB</option>
+              {currencies.map((currency) => {
+                return <option value={currency.value}>{currency.value}</option>;
+              })}
             </select>
             <input
               type="number"
-              value={0.02}
-              placeholder="Mse28M9UQJAZGSSHSXzbFXZKPg1C"
+              name="amount"
+              onChange={handleOnChange}
+              value={values.amount}
+              placeholder={0.02}
               className="grandpa__multi_column_field"
             />
           </div>
-          <Button>Continue</Button>
+          <Button type="submit">Continue</Button>
         </form>
       </div>
     </div>

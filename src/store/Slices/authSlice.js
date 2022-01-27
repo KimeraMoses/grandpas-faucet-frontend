@@ -2,10 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {},
+  wallet: {},
   token: null,
+  apiToken: null,
   isLoggedIn: false,
   status: "",
   message: null,
+  error: null,
   updateStatus: "",
   isLoading: false,
 };
@@ -26,6 +29,7 @@ export const authSlice = createSlice({
     authenticationSuccess(state, { payload }) {
       state.user = payload.user;
       state.token = payload.token;
+      state.apiToken = payload.apiToken;
       state.isLoggedIn = !!state.token;
       state.isLoading = false;
     },
@@ -37,38 +41,25 @@ export const authSlice = createSlice({
       state.isLoading = true;
     },
     verificationSuccess(state, { payload }) {
-      state.user = payload.user;
-      state.token = payload.token;
-      state.isLoggedIn = !!state.token;
       state.isLoading = false;
+      state.error = payload;
     },
     verificationFail(state, { payload }) {
       state.isLoading = false;
-      state.message = payload.message;
+      state.error = payload;
       state.status=payload.status
     },
-    updateProfilePending(state) {
+    createWalletPending(state) {
       state.isLoading = true;
     },
-    updateProfileSuccess(state, { payload }) {
-      state.user = payload.data;
+    createWalletSuccess(state, { payload }) {
+      state.wallet = payload;
       state.isLoading = false;
     },
-    updateProfileFail(state, { payload }) {
+    createWalletFail(state, { payload }) {
       state.isLoading = false;
       state.message = payload.message;
       state.status=payload.status
-    },
-    UpdateUserCourseUnitsPending(state){
-      state.isLoading = true;
-    },
-    UpdateUserCourseUnitsSuccess(state, {payload}){
-      state.isLoading = false;
-      state.user = payload.user;
-    },
-    UpdateUserCourseUnitsFail(state, { payload}){
-      state.isLoading = false;
-      state.updateStatus = payload.sucess;
     },
     logout(state) {
       state.user = {};
@@ -89,12 +80,9 @@ export const {
   verificationPending,
   verificationSuccess,
   verificationFail,
-  updateProfilePending,
-  updateProfileSuccess,
-  updateProfileFail,
-  UpdateUserCourseUnitsPending,
-  UpdateUserCourseUnitsSuccess,
-  UpdateUserCourseUnitsFail,
+  createWalletPending,
+  createWalletSuccess,
+  createWalletFail,
   logout,
 } = actions;
 

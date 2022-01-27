@@ -10,11 +10,15 @@ import Confirmation from "../Confirmation/Confirmation";
 import WhiteBoard from "../WhiteBoard/WhiteBoard";
 import MetaMask from "../MetaMask/MetaMask";
 import TransactionStatus from "../TransactionStatus/TransactionStatus";
+import { Alert } from "@material-ui/lab";
+import { useSelector } from "react-redux";
 
 const MainTemplate = (props) => {
   const { title, description, type, action } = props;
+  const user = useSelector((state) => state.auth.user);
   return (
     <div className="grandpa__sign_up">
+      <Alert severity="success">Your OTP is {user && user.otp}</Alert>
       <h4>{title}</h4>
       <p>{description}</p>
       <div className="grandpa__form_wrapper">
