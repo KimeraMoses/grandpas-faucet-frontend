@@ -12,6 +12,7 @@ import {
   createWalletSuccess,
   createWalletFail,
   isAuthenticated,
+  isConnected,
 } from "../Slices/authSlice";
 
 export const Login = (email) => {
@@ -107,10 +108,10 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
         if (!response.ok) {
           const error = await response.json();
           dispatch(createWalletFail(error));
-          // console.log(error);
+          console.log(error);
         }
         const res = await response.json();
-        // console.log(res);
+        console.log(res);
         dispatch(createWalletSuccess(res.data));
         localStorage.setItem("Wallet", JSON.stringify(res.data));
       }else{
@@ -138,11 +139,24 @@ export const SaveTokenInLocalStorage = (dispatch, userDetails) => {
 export const AutoAuthenticate = (dispatch) => {
   const AuthToken = localStorage.getItem("AuthToken");
   const CurrentUser = localStorage.getItem("CurrentUser");
+  const isAuth = localStorage.getItem("isVerified");
+  const Address = localStorage.getItem("Address");
+  const Wallet =localStorage.getItem("Wallet");
   let UserToken = "";
   if (!AuthToken) {
     dispatch(logout());
     return;
   }
+  if(!!isAuth){
+    dispatch(isAuthenticated())
+  }
+  if(Address && Address.length> 0){
+    dispatch(isConnected(Address))
+  }
+  if(Wallet){
+    dispatch(createWalletSuccess(Wallet))
+  }
+
   UserToken = JSON.parse(AuthToken);
   // let expireDate = new Date(UserToken.expirationtime);
   // let todaysDate = new Date();

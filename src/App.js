@@ -11,20 +11,14 @@ import React, { Component } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AutoAuthenticate } from "./store/Actions/AuthActions";
 function App() {
-  const isAuthenticated = useSelector((state) => state.auth.isAuth);
-  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
   const dispatch = useDispatch();
-  const Address = useSelector((state) => state.auth.address);
-  const Address_Local = localStorage.getItem("Address");
-  const isVerified = localStorage.getItem("isVerified");
-  let isConnected = false;
-  
-    if(Address || Address_Local){
-      isConnected = true
-    }else{
-      isConnected = false
-    }
 
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isVerified = useSelector((state) => state.auth.isAuth);
+  const hasAddress = useSelector((state) => state.auth.hasAddress);
+  const hasWallet = useSelector(state=>state.auth.hasWallet);
+
+  const isAuthenticated = isLoggedIn && isVerified && hasAddress && hasWallet;
 
   useEffect(() => {
     AutoAuthenticate(dispatch);
@@ -33,11 +27,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={isLoggedIn ?  <Navigate to="/confirm-otp" />:<Login />} />
+        <Route path="*" element={isAuthenticated?<Navigate to="/transactions"/>:(isLoggedIn && !isVerified)? <Navigate to="/confirm-otp"/>:(isLoggedIn && isVerified && !hasAddress)?<Navigate to="/connect-metamask"/>: <Login />} />
         <Route path="/*" element={<Home />}>
           <Route
             path="confirm-otp"
-            element={!isLoggedIn?<Navigate to="/sign-in" /> :isAuthenticated?<Navigate to="/connect-metamask" />:!!isVerified?<Navigate to="/transactions" />:
+            element={!isLoggedIn?<Navigate to="/sign-in"/>: (isLoggedIn && isVerified)? <Navigate to="/connect-metamask"/>:
               <MainTemplate
                 type="otp"
                 title="OTP"
@@ -47,7 +41,7 @@ function App() {
           />
           <Route
             path="sign-up"
-            element={(!!isVerified)?<Navigate to="/connect-metamask" />: 
+            element={(!isLoggedIn && !isVerified) &&
               <MainTemplate
                 type="whiteBoard"
                 title="WhiteBoard Crypto"
@@ -57,7 +51,7 @@ function App() {
           />
           <Route
             path="connect-metamask"
-            element={!isAuthenticated?<Navigate to="/sign-in" />:isConnected?<Navigate to="/transactions" />:
+            element={isAuthenticated? <Navigate to="/transactions"/>:!isLoggedIn?<Navigate to="/sign-in"/>:!isVerified?<Navigate to="/confirm-otp"/>:
               <MainTemplate
                 type="metaMask"
                 title="MetaMask Wallet"
@@ -76,7 +70,7 @@ function App() {
             }
           />
           <Route path="confirm" element={<Confirmation />} />
-          <Route path="transactions" element={!!isVerified?<Transactions />: <Navigate to="/sign-in"/>} />
+          <Route path="transactions" element={!isLoggedIn? <Navigate to="/sign-in"/>:!isVerified? <Navigate to="/confirm-otp"/>:!hasAddress?<Navigate to="/connect-metamask"/>: <Transactions />} />
         </Route>
       </Routes>
     </div>

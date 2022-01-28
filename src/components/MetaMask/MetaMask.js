@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 //====COMPONENT IMPORTS====//
 import Button from "../Button/Button";
 import "../SignIn/SignIn.css";
@@ -36,6 +35,7 @@ const MetaMask = () => {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [burnHash, setBurnHash] = useState("");
+  const [isNavigate, setNavigate] = useState(false);
   const [maticProvider, setMaticProvider] = useState();
   const [ethereumprovider, setEthereumProvider] = useState();
   const Navigate = useNavigate();
@@ -44,8 +44,6 @@ const MetaMask = () => {
   const uuid = user && user.uuid;
 
   const Address = useSelector((state) => state.auth.address);
-  const Address_Local = localStorage.getItem("Address");
-
 
   const loadWeb3 = async () => {
     if (window.ethereum) {
@@ -61,22 +59,22 @@ const MetaMask = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("Address", account);
+    if (account.length > 10) {
+      console.log("navigate here", account);
+      createWallet(account);
+    }
   }, [account]);
 
   const createWallet = (account) => {
     dispatch(CreateWallet(account, uuid, token, apiToken));
-    Navigate("/transactions");
+    dispatch(isConnected(account));
   };
-
   const loadBlockchainData = async () => {
     setLoading(true);
-    const web3 = window.web3;
-    const accounts = await web3.eth.getAccounts();
     const maticProvider = new WalletConnectProvider({
       host: config.MATIC_RPC,
       callbacks: {
-        onConnect: createWallet(accounts[0]),
+        onConnect: console.log("matic connected"),
         onDisconnect: console.log("matic disconnected!"),
       },
     });
@@ -91,11 +89,10 @@ const MetaMask = () => {
 
     setMaticProvider(maticProvider);
     setEthereumProvider(ethereumProvider);
+    const web3 = window.web3;
+
+    const accounts = await web3.eth.getAccounts();
     setAccount(accounts[0]);
- 
-    // if (account && account.length>0) {
-    //   Navigate("/transactions");
-    // }
     const networkId = await web3.eth.net.getId();
     setNetworkid(networkId);
 
@@ -104,20 +101,27 @@ const MetaMask = () => {
     } else if (networkId === config.MATIC_CHAINID) {
       setLoading(false);
     } else {
-      // Navigate("/transactions");
-      // window.alert("Switch to  Matic or Ethereum network");
-      // setLoading(false);
+      // window.alert(" switch to  Matic or Ethereum network");
+    }
+    console.log("the accounts is", accounts[0]);
+
+    if (accounts) {
+      localStorage.setItem("Address", accounts[0]);
+      console.log("the state", account);
     }
   };
-
-  const initConnection = () => {
-    loadWeb3();
-    loadBlockchainData();
+  const initConnection = async () => {
+    await loadWeb3();
+    await loadBlockchainData();
   };
 
   return (
-    <Button onClick={initConnection}>
-      {loading ? "Connecting..." : "Connect MetaMask Wallet"}{" "}
+    <Button
+      onClick={() => {
+        initConnection();
+      }}
+    >
+      {loading ? `Connecting...` : `Connect MetaMask Wallet`}
     </Button>
   );
 };

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {},
   wallet: {},
+  hasWallet: false,
   token: null,
   apiToken: null,
   isLoggedIn: false,
@@ -13,6 +14,7 @@ const initialState = {
   isLoading: false,
   isAuth : false,
   address: "",
+  hasAddress: false,
 };
 
 export const authSlice = createSlice({
@@ -57,6 +59,7 @@ export const authSlice = createSlice({
     createWalletSuccess(state, { payload }) {
       state.wallet = payload;
       state.isLoading = false;
+      state.hasWallet = true;
     },
     createWalletFail(state, { payload }) {
       state.isLoading = false;
@@ -68,6 +71,7 @@ export const authSlice = createSlice({
     },
     isConnected(state,{payload}){
       state.address = payload
+      state.hasAddress = !!payload
     },
     logout(state) {
       state.user = {};
