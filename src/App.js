@@ -17,15 +17,12 @@ function App() {
   const Address = useSelector((state) => state.auth.address);
   const Address_Local = localStorage.getItem("Address");
   const isVerified = localStorage.getItem("isVerified");
-  console.log(!!isVerified)
   let isConnected = false;
   
     if(Address || Address_Local){
       isConnected = true
-      console.log("Found", Address, isConnected)
     }else{
       isConnected = false
-      console.log("Not found", isConnected)
     }
 
 
@@ -40,7 +37,7 @@ function App() {
         <Route path="/*" element={<Home />}>
           <Route
             path="confirm-otp"
-            element={isAuthenticated?<Navigate to="/connect-metamask" />:!!isVerified?<Navigate to="/transactions" />:
+            element={!isLoggedIn?<Navigate to="/sign-in" /> :isAuthenticated?<Navigate to="/connect-metamask" />:!!isVerified?<Navigate to="/transactions" />:
               <MainTemplate
                 type="otp"
                 title="OTP"
@@ -60,7 +57,7 @@ function App() {
           />
           <Route
             path="connect-metamask"
-            element={!isAuthenticated?<Navigate to="/sign-in" />: (isAuthenticated && isConnected)?<Navigate to="/transactions" />:
+            element={!isAuthenticated?<Navigate to="/sign-in" />:isConnected?<Navigate to="/transactions" />:
               <MainTemplate
                 type="metaMask"
                 title="MetaMask Wallet"

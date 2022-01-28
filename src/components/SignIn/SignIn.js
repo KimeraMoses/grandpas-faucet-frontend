@@ -1,8 +1,8 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 //====REDUX IMPORTS====//
-import {useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Login } from "../../store/Actions/AuthActions";
 
 //====MUI IMPORTS====//
@@ -18,9 +18,9 @@ import "./SignIn.css";
 
 const SignIn = () => {
   const message = useSelector((state) => state.auth.message);
-  const isLoading = useSelector(state=>state.auth.isLoading)
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [values, setValues] = useState({
     email: "",
@@ -28,9 +28,8 @@ const SignIn = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setError("")
+    setError("");
     setValues({ ...values, [name]: event.target.value });
-
   };
 
   const LoginHandler = async (e) => {
@@ -50,12 +49,14 @@ const SignIn = () => {
       setError("");
       await dispatch(Login(values.email));
       setValues({ email: "" });
-      navigate('/confirm-otp')
+      navigate("/confirm-otp");
     } catch (error) {
-      navigate("/sign-up")
+      if (!navigator.onLine) {
+        return setError("Please connect to the internet to sign in");
+      }
+      navigate("/sign-up");
     }
   };
-
 
   return (
     <div className="grandpa__sign_up">
@@ -78,9 +79,10 @@ const SignIn = () => {
               checkedIcon={<CircleChecked />}
             />
             I am Human
-            
           </div>
-          <Button type="submit" disabled={isLoading}>{isLoading? "Logging in...": "Sign In"}</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Sign In"}
+          </Button>
         </form>
       </div>
     </div>

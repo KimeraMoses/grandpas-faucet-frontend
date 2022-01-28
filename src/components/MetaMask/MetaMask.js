@@ -43,6 +43,10 @@ const MetaMask = () => {
   const { user, token, apiToken } = useSelector((state) => state.auth);
   const uuid = user && user.uuid;
 
+  const Address = useSelector((state) => state.auth.address);
+  const Address_Local = localStorage.getItem("Address");
+
+
   const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
@@ -61,10 +65,8 @@ const MetaMask = () => {
   }, [account]);
 
   const createWallet = (account) => {
-    localStorage.setItem("Address", account);
-    dispatch(isConnected(account))
-    Navigate("/transactions");
     dispatch(CreateWallet(account, uuid, token, apiToken));
+    Navigate("/transactions");
   };
 
   const loadBlockchainData = async () => {
@@ -90,8 +92,10 @@ const MetaMask = () => {
     setMaticProvider(maticProvider);
     setEthereumProvider(ethereumProvider);
     setAccount(accounts[0]);
-    
-
+ 
+    // if (account && account.length>0) {
+    //   Navigate("/transactions");
+    // }
     const networkId = await web3.eth.net.getId();
     setNetworkid(networkId);
 
@@ -100,8 +104,9 @@ const MetaMask = () => {
     } else if (networkId === config.MATIC_CHAINID) {
       setLoading(false);
     } else {
+      // Navigate("/transactions");
       // window.alert("Switch to  Matic or Ethereum network");
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
