@@ -87,29 +87,33 @@ export const OTPVerify = (otp, uuid) => {
 export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
   return async (dispatch) => {
     dispatch(createWalletPending());
-    const response = await fetch(`${baseUrl}/wallet-address/`, {
-      method: "POST",
-      body: JSON.stringify({
-        address,
-        account_uuid,
-      }),
-      headers: new Headers({
-        "Content-type": "application/json",
-        apiKey: "asdfasdfasdfasdfasfasfasdf",
-        apiToken: apiToken,
-        Authorization: "Bearer " + AuthToken,
-      }),
-    });
+    if (address && address.length>0) {
+        const response = await fetch(`${baseUrl}/wallet-address/`, {
+          method: "POST",
+          body: JSON.stringify({
+            address,
+            account_uuid,
+          }),
+          headers: new Headers({
+            "Content-type": "application/json",
+            apiKey: "asdfasdfasdfasdfasfasfasdf",
+            apiToken: apiToken,
+            Authorization: "Bearer " + AuthToken,
+          }),
+        });
 
-    if (!response.ok) {
-      const error = await response.json();
-      dispatch(createWalletFail(error));
-      // console.log(error);
-    }
-    const res = await response.json();
-    // console.log(res);
-    dispatch(createWalletSuccess(res.data));
-    localStorage.setItem("Wallet",JSON.stringify(res.data) )
+        if (!response.ok) {
+          const error = await response.json();
+          dispatch(createWalletFail(error));
+          // console.log(error);
+        }
+        const res = await response.json();
+        // console.log(res);
+        dispatch(createWalletSuccess(res.data));
+        localStorage.setItem("Wallet", JSON.stringify(res.data));
+      }else{
+        return
+      }
   };
 };
 

@@ -2,7 +2,7 @@ import { Checkbox, FormControlLabel } from "@material-ui/core";
 import CircleChecked from "@material-ui/icons/CheckCircleOutline";
 import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
 import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
-import React from "react";
+import React, { useState } from "react";
 import "../SignIn/SignIn.css";
 import Button from "../Button/Button";
 import Otp from "../OTP/Otp";
@@ -15,10 +15,14 @@ import { useSelector } from "react-redux";
 
 const MainTemplate = (props) => {
   const { title, description, type, action } = props;
+  const [message, setMessage]=useState('No account with your email found!')
   const user = useSelector((state) => state.auth.user);
+
   return (
     <div className="grandpa__sign_up">
-      <Alert severity="success">Your OTP is {user && user.otp}</Alert>
+      {type === "otp"? (
+        <Alert severity="success">Your OTP is {user && user.otp}</Alert>
+      ): type ==="whiteBoard" && <Alert severity="error" icon={false}>{message}</Alert>}
       <h4>{title}</h4>
       <p>{description}</p>
       <div className="grandpa__form_wrapper">
@@ -27,11 +31,11 @@ const MainTemplate = (props) => {
         ) : type === "confirm" ? (
           <Confirmation />
         ) : type === "whiteBoard" ? (
-          <WhiteBoard />
+          <WhiteBoard setMessage={setMessage}/>
         ) : type === "metaMask" ? (
           <MetaMask />
         ) : type === "status" ? (
-          <TransactionStatus status="success"/>
+          <TransactionStatus status="success" />
         ) : (
           <form>
             <input

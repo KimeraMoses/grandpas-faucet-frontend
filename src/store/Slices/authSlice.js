@@ -11,6 +11,7 @@ const initialState = {
   error: null,
   updateStatus: "",
   isLoading: false,
+  isAuth : false,
 };
 
 export const authSlice = createSlice({
@@ -61,6 +62,9 @@ export const authSlice = createSlice({
       state.message = payload.message;
       state.status=payload.status
     },
+    isAuthenticated(state){
+      state.isAuth = true;
+    },
     logout(state) {
       state.user = {};
       state.token = null;
@@ -83,6 +87,7 @@ export const {
   createWalletPending,
   createWalletSuccess,
   createWalletFail,
+  isAuthenticated,
   logout,
 } = actions;
 

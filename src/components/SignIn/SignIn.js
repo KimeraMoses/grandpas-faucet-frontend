@@ -52,8 +52,7 @@ const SignIn = () => {
       setValues({ email: "" });
       navigate('/confirm-otp')
     } catch (error) {
-      window.location.replace('https://whiteboardcrypto.com/');
-    
+      navigate("/sign-up")
     }
   };
 

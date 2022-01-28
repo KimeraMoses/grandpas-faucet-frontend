@@ -11,7 +11,7 @@ import React, { Component } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AutoAuthenticate } from "./store/Actions/AuthActions";
 function App() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isAuthenticated = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
   useEffect(() => {
     AutoAuthenticate(dispatch);
@@ -20,11 +20,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={isAuthenticated ?  <Navigate to="/transactions" />:<Login />} />
         <Route path="/*" element={<Home />}>
           <Route
             path="confirm-otp"
-            element={
+            element={isAuthenticated?<Navigate to="/connect-metamask" />: 
               <MainTemplate
                 type="otp"
                 title="OTP"
@@ -34,14 +34,14 @@ function App() {
           />
           <Route
             path="sign-up"
-            element={
+            element={isAuthenticated?<Navigate to="/transactions" />: 
               <MainTemplate
                 type="whiteBoard"
                 title="WhiteBoard Crypto"
                 description="Please click the button below to setup your account on WhiteBoard Crypto."
               />
             }
-          />
+          /> 
           <Route
             path="connect-metamask"
             element={
@@ -63,7 +63,7 @@ function App() {
             }
           />
           <Route path="confirm" element={<Confirmation />} />
-          <Route path="transactions" element={<Transactions />} />
+          <Route path="transactions" element={isAuthenticated?<Transactions />: <Navigate to="/sign-in"/>} />
         </Route>
       </Routes>
     </div>

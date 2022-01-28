@@ -9,7 +9,7 @@ import Web3 from "web3";
 import WalletConnectProvider from "@maticnetwork/walletconnect-provider";
 import { useNavigate } from "react-router-dom";
 import { CreateWallet } from "../../store/Actions/AuthActions";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 const MaticPoSClient = require("@maticnetwork/maticjs").MaticPOSClient;
 const Network = require("@maticnetwork/meta/network");
 const Matic = require("@maticnetwork/maticjs");
@@ -38,8 +38,8 @@ const MetaMask = () => {
   const [maticProvider, setMaticProvider] = useState();
   const [ethereumprovider, setEthereumProvider] = useState();
   const Navigate = useNavigate();
-  const dispatch = useDispatch()
-  const { user,token,apiToken } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { user, token, apiToken } = useSelector((state) => state.auth);
   const uuid = user && user.uuid;
 
   const loadWeb3 = async () => {
@@ -54,10 +54,15 @@ const MetaMask = () => {
       );
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("Address", account);
+  }, [account]);
+
   const createWallet = (account) => {
     localStorage.setItem("Address", account);
     Navigate("/transactions");
-    dispatch(CreateWallet(account, uuid,token,apiToken));
+    dispatch(CreateWallet(account, uuid, token, apiToken));
   };
 
   const loadBlockchainData = async () => {
@@ -82,10 +87,7 @@ const MetaMask = () => {
 
     setMaticProvider(maticProvider);
     setEthereumProvider(ethereumProvider);
-    // const web3 = window.web3;
-
-    // const accounts = await web3.eth.getAccounts();
-    // setAccount(accounts[0]);
+    setAccount(accounts[0]);
 
     const networkId = await web3.eth.net.getId();
     setNetworkid(networkId);
