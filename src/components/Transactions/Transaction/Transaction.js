@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Transaction.css";
 import Button from "../../Button/Button";
+import { useSelector } from "react-redux";
 const currencies = [
   { value: "MATIC" },
   { value: "FTM" },
@@ -15,10 +16,11 @@ const currencies = [
 ];
 
 const Transaction = (props) => {
-  const Address = localStorage.getItem("Address");
+  const Address = useSelector((state) => state.auth.address);
+  const Address_Local = localStorage.getItem("Address");
   const [values, setValues] =useState({
     amount: "",
-    hash: Address
+    hash: (Address || Address_Local)
   })
 
   const handleOnChange = (event) => {
@@ -45,7 +47,6 @@ const Transaction = (props) => {
             value={values.hash}
             onChange={handleOnChange}
             name="address"
-            placeholder="Mse28M9UQJAZGSSHSXzbFXZKPg1C"
             className="grandpa__input_field"
           />
           <div className="grandpa__multi_column_fields_wrapper">

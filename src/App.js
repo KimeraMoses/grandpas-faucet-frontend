@@ -12,9 +12,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AutoAuthenticate } from "./store/Actions/AuthActions";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuth);
+  const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
   const dispatch = useDispatch();
   const Address = useSelector((state) => state.auth.address);
   const Address_Local = localStorage.getItem("Address");
+  const isVerified = localStorage.getItem("isVerified");
+  console.log(!!isVerified)
   let isConnected = false;
   
     if(Address || Address_Local){
@@ -33,11 +36,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={(isAuthenticated && isConnected) ?  <Navigate to="/transactions" />:<Login />} />
+        <Route path="*" element={isLoggedIn ?  <Navigate to="/confirm-otp" />:<Login />} />
         <Route path="/*" element={<Home />}>
           <Route
             path="confirm-otp"
-            element={isAuthenticated?<Navigate to="/connect-metamask" />: (isAuthenticated && isConnected)?<Navigate to="/transactions" />:
+            element={isAuthenticated?<Navigate to="/connect-metamask" />:!!isVerified?<Navigate to="/transactions" />:
               <MainTemplate
                 type="otp"
                 title="OTP"
@@ -47,7 +50,7 @@ function App() {
           />
           <Route
             path="sign-up"
-            element={(isAuthenticated && isConnected)?<Navigate to="/transactions" />: 
+            element={(!!isVerified)?<Navigate to="/connect-metamask" />: 
               <MainTemplate
                 type="whiteBoard"
                 title="WhiteBoard Crypto"
@@ -76,7 +79,7 @@ function App() {
             }
           />
           <Route path="confirm" element={<Confirmation />} />
-          <Route path="transactions" element={(isConnected && isAuthenticated)?<Transactions />: <Navigate to="/sign-in"/>} />
+          <Route path="transactions" element={!!isVerified?<Transactions />: <Navigate to="/sign-in"/>} />
         </Route>
       </Routes>
     </div>

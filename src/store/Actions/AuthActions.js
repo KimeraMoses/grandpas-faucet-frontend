@@ -81,6 +81,7 @@ export const OTPVerify = (otp, uuid) => {
     }
     dispatch(verificationSuccess(Errormessage));
     dispatch(isAuthenticated())
+    localStorage.setItem("isVerified", true)
     // console.log(data)
   };
 };

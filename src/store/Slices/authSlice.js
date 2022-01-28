@@ -73,6 +73,7 @@ export const authSlice = createSlice({
       state.user = {};
       state.token = null;
       state.isLoggedIn = false;
+      localStorage.removeItem("isVerified")
       localStorage.removeItem("AuthToken");
       localStorage.removeItem("CurrentUser");
     },
