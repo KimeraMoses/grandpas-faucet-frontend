@@ -12,7 +12,6 @@ import { Alert } from "@material-ui/lab";
 import Button from "../Button/Button";
 import "../SignIn/SignIn.css";
 import { useEffect } from "react";
-import { isAuthenticated } from "../../store/Slices/authSlice";
 
 const Otp = () => {
   const message = useSelector((state) => state.auth.error);
@@ -46,7 +45,6 @@ const Otp = () => {
       setError("");
       await dispatch(OTPVerify(+values.otp, uuid));
       setValues({ otp: "" });
-      dispatch(isAuthenticated())
       navigate("/connect-metamask");
     } catch (error) {
       setError("Failed to verify Otp, Please try again later");

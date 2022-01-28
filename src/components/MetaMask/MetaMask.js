@@ -10,6 +10,7 @@ import WalletConnectProvider from "@maticnetwork/walletconnect-provider";
 import { useNavigate } from "react-router-dom";
 import { CreateWallet } from "../../store/Actions/AuthActions";
 import { useSelector, useDispatch } from "react-redux";
+import { isConnected } from "../../store/Slices/authSlice";
 const MaticPoSClient = require("@maticnetwork/maticjs").MaticPOSClient;
 const Network = require("@maticnetwork/meta/network");
 const Matic = require("@maticnetwork/maticjs");
@@ -61,6 +62,7 @@ const MetaMask = () => {
 
   const createWallet = (account) => {
     localStorage.setItem("Address", account);
+    dispatch(isConnected(account))
     Navigate("/transactions");
     dispatch(CreateWallet(account, uuid, token, apiToken));
   };
@@ -88,6 +90,7 @@ const MetaMask = () => {
     setMaticProvider(maticProvider);
     setEthereumProvider(ethereumProvider);
     setAccount(accounts[0]);
+    
 
     const networkId = await web3.eth.net.getId();
     setNetworkid(networkId);

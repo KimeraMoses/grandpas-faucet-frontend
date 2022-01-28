@@ -13,6 +13,19 @@ import { AutoAuthenticate } from "./store/Actions/AuthActions";
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuth);
   const dispatch = useDispatch();
+  const Address = useSelector((state) => state.auth.address);
+  const Address_Local = localStorage.getItem("Address");
+  let isConnected = false;
+  
+    if(Address || Address_Local){
+      isConnected = true
+      console.log("Found", Address, isConnected)
+    }else{
+      isConnected = false
+      console.log("Not found", isConnected)
+    }
+
+
   useEffect(() => {
     AutoAuthenticate(dispatch);
   }, []);
@@ -20,11 +33,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="*" element={isAuthenticated ?  <Navigate to="/transactions" />:<Login />} />
+        <Route path="*" element={(isAuthenticated && isConnected) ?  <Navigate to="/transactions" />:<Login />} />
         <Route path="/*" element={<Home />}>
           <Route
             path="confirm-otp"
-            element={isAuthenticated?<Navigate to="/connect-metamask" />: 
+            element={isAuthenticated?<Navigate to="/connect-metamask" />: (isAuthenticated && isConnected)?<Navigate to="/transactions" />:
               <MainTemplate
                 type="otp"
                 title="OTP"
@@ -34,17 +47,17 @@ function App() {
           />
           <Route
             path="sign-up"
-            element={isAuthenticated?<Navigate to="/transactions" />: 
+            element={(isAuthenticated && isConnected)?<Navigate to="/transactions" />: 
               <MainTemplate
                 type="whiteBoard"
                 title="WhiteBoard Crypto"
                 description="Please click the button below to setup your account on WhiteBoard Crypto."
               />
             }
-          /> 
+          />
           <Route
             path="connect-metamask"
-            element={
+            element={!isAuthenticated?<Navigate to="/sign-in" />: (isAuthenticated && isConnected)?<Navigate to="/transactions" />:
               <MainTemplate
                 type="metaMask"
                 title="MetaMask Wallet"
@@ -63,7 +76,7 @@ function App() {
             }
           />
           <Route path="confirm" element={<Confirmation />} />
-          <Route path="transactions" element={isAuthenticated?<Transactions />: <Navigate to="/sign-in"/>} />
+          <Route path="transactions" element={(isConnected && isAuthenticated)?<Transactions />: <Navigate to="/sign-in"/>} />
         </Route>
       </Routes>
     </div>

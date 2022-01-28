@@ -11,6 +11,7 @@ import {
   createWalletPending,
   createWalletSuccess,
   createWalletFail,
+  isAuthenticated,
 } from "../Slices/authSlice";
 
 export const Login = (email) => {
@@ -79,7 +80,7 @@ export const OTPVerify = (otp, uuid) => {
       Errormessage = "OTP entered is incorrect";
     }
     dispatch(verificationSuccess(Errormessage));
-
+    dispatch(isAuthenticated())
     // console.log(data)
   };
 };

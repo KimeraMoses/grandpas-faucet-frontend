@@ -12,6 +12,7 @@ const initialState = {
   updateStatus: "",
   isLoading: false,
   isAuth : false,
+  address: "",
 };
 
 export const authSlice = createSlice({
@@ -65,6 +66,9 @@ export const authSlice = createSlice({
     isAuthenticated(state){
       state.isAuth = true;
     },
+    isConnected(state,{payload}){
+      state.address = payload
+    },
     logout(state) {
       state.user = {};
       state.token = null;
@@ -88,6 +92,7 @@ export const {
   createWalletSuccess,
   createWalletFail,
   isAuthenticated,
+  isConnected,
   logout,
 } = actions;
 
