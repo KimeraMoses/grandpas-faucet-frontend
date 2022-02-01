@@ -130,6 +130,7 @@ const navigate  = useNavigate()
             onChange={handleOnChange}
             name="userAddress"
             className="grandpa__input_field"
+            disabled
           />
           <div className="grandpa__multi_column_fields_wrapper">
             <select
