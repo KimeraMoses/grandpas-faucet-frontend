@@ -15,10 +15,19 @@
     box-sizing: border-box;
     color: #fff;
     font-weight: 600;
+    user-select: none;
 }
 .grandpa__btn.grandpa__btn_primary{
     background-color: #4FBF87;
 }
 .grandpa__btn.grandpa__btn_secondary{
     background-color: #0964ee;
+}
+.grandpa__btn.btn__disabled{
+    pointer-events: none;
+    cursor: default;
+    color: rgba(0, 0, 0, 0.26);
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.12);
+    
 }

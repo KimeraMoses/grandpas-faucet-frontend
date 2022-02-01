@@ -15,3 +15,4 @@ const store = configureStore({
 
 export default store;
 export const baseUrl = "https://grandpas-faucet.herokuapp.com";
+export const apiKey ="asdfasdfasdfasdfasfasfasdf";

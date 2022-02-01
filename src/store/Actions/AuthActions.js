@@ -1,4 +1,4 @@
-import { baseUrl } from "..";
+import { apiKey, baseUrl } from "..";
 import {
   authenticationPending,
   authenticationSuccess,
@@ -73,7 +73,6 @@ export const OTPVerify = (otp, uuid) => {
         Errormessage = "OTP entered is incorrect";
       }
       dispatch(verificationFail(Errormessage));
-      console.log(error);
     }
     const data = await response.json();
     let Errormessage = "";
@@ -99,7 +98,7 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
           }),
           headers: new Headers({
             "Content-type": "application/json",
-            apiKey: "asdfasdfasdfasdfasfasfasdf",
+            apiKey: apiKey,
             apiToken: apiToken,
             Authorization: "Bearer " + AuthToken,
           }),
@@ -108,10 +107,8 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
         if (!response.ok) {
           const error = await response.json();
           dispatch(createWalletFail(error));
-          console.log(error);
         }
         const res = await response.json();
-        console.log(res);
         dispatch(createWalletSuccess(res.data));
         localStorage.setItem("Wallet", JSON.stringify(res.data));
       }else{

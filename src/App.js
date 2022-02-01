@@ -19,7 +19,12 @@ function App() {
   const hasWallet = useSelector(state=>state.auth.hasWallet);
 
   const isAuthenticated = isLoggedIn && isVerified && hasAddress && hasWallet;
-
+  console.log("isLoggedIn", isLoggedIn)
+  console.log("isVerified", isVerified)
+  console.log("hasAddress", hasAddress)
+  console.log("hasWallet", hasWallet)
+  console.log(isAuthenticated)
+  
   useEffect(() => {
     AutoAuthenticate(dispatch);
   }, []);
