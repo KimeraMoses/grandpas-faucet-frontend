@@ -7,6 +7,7 @@ import { isConnected } from "../../../store/Slices/authSlice";
 import { CreateTransaction } from "../../../store/Actions/TransactionsActions";
 import { Alert } from "@material-ui/lab";
 import { useNavigate } from "react-router-dom";
+import Dropdown from "../../Dropdown/Dropdown";
 
 const Transaction = (props) => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Transaction = (props) => {
   const Faucets = useSelector((state) => state.transactions.faucets);
   const isFetchingFaucets = useSelector((state) => state.transactions.fetching);
   const [userAddress, setUserAddress] = useState("");
+  const [selected, setSelected] = useState("Select One");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,7 @@ const Transaction = (props) => {
     faucet: "",
     hash: userAddress,
   });
-  let invalidData = false;
+  let invalidData = true;
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: event.target.value });
@@ -32,19 +34,11 @@ const Transaction = (props) => {
     setMessage("");
   };
   const wallet_uuid = wallet && wallet.uuid;
-  useEffect(() => {
-    if (Faucets && Faucets.length > 0) {
-      setValues({
-        ...values,
-        faucet: Faucets && Faucets[0] && Faucets[0].uuid,
-      });
-    }
-  }, [Faucets]);
 
   const selectedFaucet =
     Faucets && Faucets.filter((faucet) => faucet.uuid === values.faucet)[0];
 
-  if (values.amount.length > 0) {
+  if (values.amount.length >0) {
     invalidData =
       values.amount >
       ((selectedFaucet && selectedFaucet.maximum_amount) ||
@@ -140,21 +134,8 @@ const Transaction = (props) => {
             disabled
           />
           <div className="grandpa__multi_column_fields_wrapper">
-            <select
-              className="grandpa__multi_column_field"
-              onChange={handleOnChange}
-              name="faucet"
-              value={values.faucet}
-            >
-              {isFetchingFaucets ? (
-                <option>Loading...</option>
-              ) : (
-                Faucets &&
-                Faucets.map((faucet) => {
-                  return <option value={faucet.uuid}>{faucet.name}</option>;
-                })
-              )}
-            </select>
+            <Dropdown selected={selected} setSelected={setSelected} values={values} setValues={setValues}/>
+  
             <input
               type="number"
               name="amount"
@@ -165,7 +146,7 @@ const Transaction = (props) => {
             />
           </div>
           <Button type="submit" disabled={invalidData || loading}>
-            {loading ? `creating...` : `continue`}
+            {loading ? `Transfering...` : `Continue`}
           </Button>
         </form>
       </div>

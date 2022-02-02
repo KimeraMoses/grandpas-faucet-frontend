@@ -22,3 +22,17 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+@media screen and (max-width: 689px) {
+    .grandpa__transaction_token{
+        width: 100px;
+    }
+    .grandpa__transaction_list_wrapper{
+        width: 100%;
+        min-width: 100%;
+        padding: 2px;
+    }
+    .grandpa__transaction__card_wrapper{
+        font-size: 12px;
+    }
+}

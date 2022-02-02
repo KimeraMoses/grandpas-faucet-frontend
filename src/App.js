@@ -87,6 +87,7 @@ function App() {
           <Route path="confirm" element={<Confirmation />} />
           <Route path="transactions" element={!isLoggedIn? <Navigate to="/sign-in"/>:!isVerified? <Navigate to="/confirm-otp"/>:!hasAddress?<Navigate to="/connect-metamask"/>: <Transactions />} />
         </Route>
+
       </Routes>
     </div>
   );
