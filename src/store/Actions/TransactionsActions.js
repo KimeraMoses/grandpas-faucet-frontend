@@ -20,7 +20,7 @@ export const fetchTransactions = (AuthToken, apiToken) => async (dispatch) => {
       method: "GET",
       headers: new Headers({
         "Content-type": "application/json",
-        apiKey: "asdfasdfasdfasdfasfasfasdf",
+        apiKey: apiKey,
         apiToken: apiToken,
         Authorization: "Bearer " + AuthToken,
       }),
