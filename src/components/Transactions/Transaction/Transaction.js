@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 
 const Transaction = (props) => {
   const dispatch = useDispatch();
-
   const wallet = useSelector((state) => state.auth.wallet);
   const { apiToken, token } = useSelector((state) => state.auth);
   const Faucets = useSelector((state) => state.transactions.faucets);
@@ -19,7 +18,7 @@ const Transaction = (props) => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-const navigate  = useNavigate()
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     amount: "",
     faucet: "",
@@ -29,11 +28,18 @@ const navigate  = useNavigate()
   const handleOnChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: event.target.value });
-    setError("")
-    setMessage("")
+    setError("");
+    setMessage("");
   };
   const wallet_uuid = wallet && wallet.uuid;
-  console.log(wallet_uuid);
+  useEffect(() => {
+    if (Faucets && Faucets.length > 0) {
+      setValues({
+        ...values,
+        faucet: Faucets && Faucets[0] && Faucets[0].uuid,
+      });
+    }
+  }, [Faucets]);
 
   const selectedFaucet =
     Faucets && Faucets.filter((faucet) => faucet.uuid === values.faucet)[0];
@@ -57,8 +63,8 @@ const navigate  = useNavigate()
       return setError("Please enter the amount to continue");
     }
     try {
-      setError("")
-      setLoading(true)
+      setError("");
+      setLoading(true);
       await dispatch(
         CreateTransaction(
           wallet_uuid,
@@ -68,15 +74,15 @@ const navigate  = useNavigate()
           token
         )
       );
-      setLoading(false)
+      setLoading(false);
 
       setValues({ ...values, amount: "" });
       setMessage("Transaction created successfuly");
-      navigate('/status')
+      navigate("/transaction-success");
     } catch {
-      setLoading(false)
-
+      setLoading(false);
       setError("Failed to create transaction!");
+      navigate("/transaction-fail");
     }
   };
 
@@ -104,6 +110,7 @@ const navigate  = useNavigate()
   useEffect(() => {
     getAddress();
   }, []);
+  useEffect(() => {}, [wallet]);
 
   return (
     <div className="grandpa__transaction_wrapper">
@@ -157,8 +164,8 @@ const navigate  = useNavigate()
               className="grandpa__multi_column_field"
             />
           </div>
-          <Button type="submit" disabled={invalidData}>
-          {loading ? `creating...` : `continue`} 
+          <Button type="submit" disabled={invalidData || loading}>
+            {loading ? `creating...` : `continue`}
           </Button>
         </form>
       </div>

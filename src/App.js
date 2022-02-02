@@ -19,11 +19,11 @@ function App() {
   const hasWallet = useSelector(state=>state.auth.hasWallet);
 
   const isAuthenticated = isLoggedIn && isVerified && hasAddress && hasWallet;
-  console.log("isLoggedIn", isLoggedIn)
-  console.log("isVerified", isVerified)
-  console.log("hasAddress", hasAddress)
-  console.log("hasWallet", hasWallet)
-  console.log(isAuthenticated)
+  // console.log("isLoggedIn", isLoggedIn)
+  // console.log("isVerified", isVerified)
+  // console.log("hasAddress", hasAddress)
+  // console.log("hasWallet", hasWallet)
+  // console.log(isAuthenticated)
   
   useEffect(() => {
     AutoAuthenticate(dispatch);
@@ -65,12 +65,22 @@ function App() {
             }
           />
           <Route
-            path="status"
+            path="transaction-success"
             element={
               <MainTemplate
-                type="status"
+                type="transactionSuccess"
                 title="Transaction Status"
                 description="Congratulations! Your transaction has been completed successfully."
+              />
+            }
+          />
+          <Route
+            path="transaction-fail"
+            element={
+              <MainTemplate
+                type="transactionFail"
+                title="Transaction Status"
+                description="Oh no! Something went wrong and your transaction could not be completed."
               />
             }
           />

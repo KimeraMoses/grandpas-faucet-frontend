@@ -15,14 +15,20 @@ import { useSelector } from "react-redux";
 
 const MainTemplate = (props) => {
   const { title, description, type, action } = props;
-  const [message, setMessage]=useState('No account with your email found!')
+  const [message, setMessage] = useState("No account with your email found!");
   const user = useSelector((state) => state.auth.user);
 
   return (
     <div className="grandpa__sign_up">
-      {type === "otp"? (
+      {type === "otp" ? (
         <Alert severity="success">Your OTP is {user && user.otp}</Alert>
-      ): type ==="whiteBoard" && <Alert severity="error" icon={false}>{message}</Alert>}
+      ) : (
+        type === "whiteBoard" && (
+          <Alert severity="error" icon={false}>
+            {message}
+          </Alert>
+        )
+      )}
       <h4>{title}</h4>
       <p>{description}</p>
       <div className="grandpa__form_wrapper">
@@ -31,11 +37,13 @@ const MainTemplate = (props) => {
         ) : type === "confirm" ? (
           <Confirmation />
         ) : type === "whiteBoard" ? (
-          <WhiteBoard setMessage={setMessage}/>
+          <WhiteBoard setMessage={setMessage} />
         ) : type === "metaMask" ? (
           <MetaMask />
-        ) : type === "status" ? (
+        ) : type === "transactionSuccess" ? (
           <TransactionStatus status="success" />
+        ) : type === "transactionFail" ? (
+          <TransactionStatus status="fail" />
         ) : (
           <form>
             <input

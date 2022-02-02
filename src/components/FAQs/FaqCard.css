@@ -28,3 +28,6 @@
     padding: 10px 20px;
     border-top: 1px solid #595959;
 }
+.grandpa__faq_card_content iframe{
+    width: 100%;
+}

@@ -151,7 +151,7 @@ export const AutoAuthenticate = (dispatch) => {
     dispatch(isConnected(Address))
   }
   if(Wallet){
-    dispatch(createWalletSuccess(Wallet))
+    dispatch(createWalletSuccess(JSON.parse(Wallet)))
   }
 
   UserToken = JSON.parse(AuthToken);
