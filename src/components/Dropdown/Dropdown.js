@@ -14,17 +14,19 @@ import { useSelector } from "react-redux";
 const Dropdown = (props) => {
   const { selected, setSelected, values, setValues } = props;
   const [isActive, setIsActive] = useState(false);
+  const [clicked, setClicked]=useState(true)
   const Faucets = useSelector((state) => state.transactions.faucets);
   const selectedItemHandler = (Value) => {
     setSelected(Value.name);
     setIsActive(false);
     setValues({ ...values, faucet:Value.uuid  });
+    setClicked(false)
   };
 
   return (
     <div className={classes.gpa__dropdown}>
       <div
-        className={classes.gpa__dropdown_button}
+      className={`${classes.gpa__dropdown_button} ${clicked? classes.btn__inactive: ''}`}
         onClick={(e) => setIsActive(!isActive)}
       >
         <div className={classes.gpa__dropdown_button_text}>

@@ -34,17 +34,22 @@ const Transaction = (props) => {
     setMessage("");
   };
   const wallet_uuid = wallet && wallet.uuid;
-
   const selectedFaucet =
     Faucets && Faucets.filter((faucet) => faucet.uuid === values.faucet)[0];
 
-  if (values.amount.length >0) {
-    invalidData =
-      values.amount >
-      ((selectedFaucet && selectedFaucet.maximum_amount) ||
-        (selectedFaucet && selectedFaucet.total_value))
-        ? true
-        : false;
+  let invalidMax = true;
+  let invalidTotal = true;
+
+  if (
+    selectedFaucet &&
+    values.amount.length > 0 &&
+    parseFloat(values.amount) !== 0
+  ) {
+    invalidMax =
+      parseFloat(values.amount) < selectedFaucet.maximum_amount ? true : false;
+    invalidTotal =
+      parseFloat(values.amount) < selectedFaucet.total_value ? true : false;
+    invalidData = invalidMax && invalidTotal ? false : true;
   }
 
   const TransactionSubmitHandler = async (event) => {
@@ -134,8 +139,13 @@ const Transaction = (props) => {
             disabled
           />
           <div className="grandpa__multi_column_fields_wrapper">
-            <Dropdown selected={selected} setSelected={setSelected} values={values} setValues={setValues}/>
-  
+            <Dropdown
+              selected={selected}
+              setSelected={setSelected}
+              values={values}
+              setValues={setValues}
+            />
+
             <input
               type="number"
               name="amount"

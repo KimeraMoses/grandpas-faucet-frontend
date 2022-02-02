@@ -20,6 +20,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.gpa__dropdown_button.btn__inactive{
+  color: #0000009a;
+}
 .gpa__dropdown_content {
   position: absolute;
   width: 100%;
