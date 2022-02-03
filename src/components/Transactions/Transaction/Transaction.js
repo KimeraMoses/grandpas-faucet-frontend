@@ -135,7 +135,7 @@ const Transaction = (props) => {
             value={userAddress}
             onChange={handleOnChange}
             name="userAddress"
-            className="grandpa__input_field"
+            className="grandpa__input_field grandpa__input_address_field"
             disabled
           />
           <div className="grandpa__multi_column_fields_wrapper">

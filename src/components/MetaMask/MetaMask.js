@@ -60,7 +60,6 @@ const MetaMask = () => {
 
   useEffect(() => {
     if (account.length > 10) {
-      console.log("navigate here", account);
       createWallet(account);
     }
   }, [account]);
@@ -103,11 +102,9 @@ const MetaMask = () => {
     } else {
       // window.alert(" switch to  Matic or Ethereum network");
     }
-    console.log("the accounts is", accounts[0]);
 
     if (accounts) {
       localStorage.setItem("Address", accounts[0]);
-      console.log("the state", account);
     }
   };
   const initConnection = async () => {

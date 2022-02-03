@@ -1,4 +1,4 @@
-import { apiKey, baseUrl } from "..";
+
 import {
   authenticationPending,
   authenticationSuccess,
@@ -18,7 +18,7 @@ import {
 export const Login = (email) => {
   return async (dispatch) => {
     dispatch(authenticationPending());
-    const response = await fetch(`${baseUrl}/accounts/login`, {
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/accounts/login`, {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -36,7 +36,6 @@ export const Login = (email) => {
       dispatch(authenticationFail(errorMessage));
     }
     const res = await response.json();
-    console.log(res);
     dispatch(
       authenticationSuccess({
         user: res.data,
@@ -56,7 +55,7 @@ export const Login = (email) => {
 export const OTPVerify = (otp, uuid) => {
   return async (dispatch) => {
     dispatch(verificationPending());
-    const response = await fetch(`${baseUrl}/accounts/verify-otp/${uuid}`, {
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/accounts/verify-otp/${uuid}`, {
       method: "POST",
       body: JSON.stringify({
         otp,
@@ -82,7 +81,6 @@ export const OTPVerify = (otp, uuid) => {
     dispatch(verificationSuccess(Errormessage));
     dispatch(isAuthenticated())
     localStorage.setItem("isVerified", true)
-    // console.log(data)
   };
 };
 
@@ -90,7 +88,7 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
   return async (dispatch) => {
     dispatch(createWalletPending());
     if (address && address.length>0) {
-        const response = await fetch(`${baseUrl}/wallet-address/`, {
+        const response = await fetch(`${process.env.REACT_APP_BASEURL}/wallet-address/`, {
           method: "POST",
           body: JSON.stringify({
             address,
@@ -98,7 +96,7 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
           }),
           headers: new Headers({
             "Content-type": "application/json",
-            apiKey: apiKey,
+            apiKey: process.env.REACT_APP_APIKEY,
             apiToken: apiToken,
             Authorization: "Bearer " + AuthToken,
           }),

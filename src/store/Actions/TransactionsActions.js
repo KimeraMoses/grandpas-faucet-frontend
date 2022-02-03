@@ -1,4 +1,3 @@
-import { apiKey, baseUrl } from "..";
 import {
   createTransactionFail,
   createTransactionPending,
@@ -16,11 +15,11 @@ import {
 export const fetchTransactions = (AuthToken, apiToken) => async (dispatch) => {
   dispatch(fetchTransactionsPending());
   try {
-    const response = await fetch(`${baseUrl}/transaction/list/5`, {
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/transaction/list/5`, {
       method: "GET",
       headers: new Headers({
         "Content-type": "application/json",
-        apiKey: apiKey,
+        apiKey: process.env.REACT_APP_APIKEY,
         apiToken: apiToken,
         Authorization: "Bearer " + AuthToken,
       }),
@@ -35,11 +34,11 @@ export const fetchTransactions = (AuthToken, apiToken) => async (dispatch) => {
 export const fetchFaucets = (AuthToken, apiToken) => async (dispatch) => {
   dispatch(fetchFaucetPending());
   try {
-    const response = await fetch(`${baseUrl}/token/enabled`, {
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/token/enabled`, {
       method: "GET",
       headers: new Headers({
         "Content-type": "application/json",
-        apiKey: apiKey,
+        apiKey: process.env.REACT_APP_APIKEY,
         apiToken: apiToken,
         Authorization: "Bearer " + AuthToken,
       }),
@@ -60,10 +59,7 @@ export const CreateTransaction = (
 ) => {
   return async (dispatch) => {
     dispatch(createTransactionPending());
-    console.log("From create transaction",wallet_uuid,
-    amount,
-    token_uuid,)
-    const response = await fetch(`${baseUrl}/transaction/`, {
+    const response = await fetch(`${process.env.REACT_APP_BASEURL}/transaction/`, {
       method: "POST",
       body: JSON.stringify({
         wallet_uuid,
@@ -72,7 +68,7 @@ export const CreateTransaction = (
       }),
       headers: new Headers({
         "Content-type": "application/json",
-        apiKey: apiKey,
+        apiKey: process.env.REACT_APP_APIKEY,
         apiToken: apiToken,
         Authorization: "Bearer " + AuthToken,
       }),

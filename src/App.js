@@ -5,7 +5,6 @@ import Home from "./components/Home/Home";
 import MainTemplate from "./components/MainTemplate/MainTemplate";
 import SignIn from "./components/SignIn/SignIn";
 import Transactions from "./components/Transactions/Transactions";
-import "./App.css";
 import Login from "./components/Home/Login";
 import React, { Component } from "react";
 import { useDispatch, useSelector } from "react-redux";
