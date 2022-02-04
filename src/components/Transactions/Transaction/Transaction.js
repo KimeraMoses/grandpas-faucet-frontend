@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Web3 from "web3";
 import "./Transaction.css";
 import Button from "../../Button/Button";
@@ -15,7 +15,7 @@ const Transaction = (props) => {
   const { apiToken, token } = useSelector((state) => state.auth);
   const Faucets = useSelector((state) => state.transactions.faucets);
   const isFetchingFaucets = useSelector((state) => state.transactions.fetching);
-  const [userAddress, setUserAddress] = useState("");
+  const userAddress = useSelector((state) => state.auth.address);
   const [selected, setSelected] = useState("Select One");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -24,7 +24,7 @@ const Transaction = (props) => {
   const [values, setValues] = useState({
     amount: "",
     faucet: "",
-    hash: userAddress,
+    hash: "",
   });
   let invalidData = true;
   const handleOnChange = (event) => {
@@ -36,7 +36,6 @@ const Transaction = (props) => {
   const wallet_uuid = wallet && wallet.uuid;
   const selectedFaucet =
     Faucets && Faucets.filter((faucet) => faucet.uuid === values.faucet)[0];
-
   let invalidMax = true;
   let invalidTotal = true;
 
@@ -52,8 +51,17 @@ const Transaction = (props) => {
     invalidData = invalidMax && invalidTotal ? false : true;
   }
 
+  let nearSelected = false;
+  if (values.faucet.length > 0 && selected.toLowerCase() === "near") {
+    nearSelected = true;
+  }
+  const noValueEntered = nearSelected && values.hash.length < 1;
+
   const TransactionSubmitHandler = async (event) => {
     event.preventDefault();
+    if (nearSelected && values.hash.length < 1) {
+      return setError("Please enter your wallet ID");
+    }
     if (values.faucet.length < 6) {
       return setError("Please select faucet to continue");
     }
@@ -66,7 +74,7 @@ const Transaction = (props) => {
       setLoading(true);
       await dispatch(
         CreateTransaction(
-          wallet_uuid,
+          nearSelected ? values.hash : wallet_uuid,
           values.amount,
           values.faucet,
           apiToken,
@@ -103,7 +111,6 @@ const Transaction = (props) => {
     const accounts = await web3.eth.getAccounts();
     localStorage.setItem("Address", accounts[0]);
     dispatch(isConnected(accounts[0]));
-    setUserAddress(accounts[0]);
   };
 
   useEffect(() => {
@@ -132,11 +139,12 @@ const Transaction = (props) => {
         <form onSubmit={TransactionSubmitHandler}>
           <input
             type="text"
-            value={userAddress}
+            value={!nearSelected ? userAddress : values.hash}
+            placeholder="address.testnet"
             onChange={handleOnChange}
-            name="userAddress"
+            name="hash"
             className="grandpa__input_field grandpa__input_address_field"
-            disabled
+            disabled={!nearSelected}
           />
           <div className="grandpa__multi_column_fields_wrapper">
             <Dropdown
@@ -155,7 +163,10 @@ const Transaction = (props) => {
               className="grandpa__multi_column_field"
             />
           </div>
-          <Button type="submit" disabled={invalidData || loading}>
+          <Button
+            type="submit"
+            disabled={invalidData || loading || noValueEntered}
+          >
             {loading ? `Transfering...` : `Continue`}
           </Button>
         </form>
