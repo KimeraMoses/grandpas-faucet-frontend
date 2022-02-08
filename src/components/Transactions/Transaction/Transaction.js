@@ -46,7 +46,7 @@ const Transaction = (props) => {
   ) {
     invalidMax =
       parseFloat(values.amount) < selectedFaucet.maximum_amount ? true : false;
-    if(selectedFaucet && selectedFaucet.name && selectedFaucet.name.toLowerCase()!=='near'){
+    if(selectedFaucet && selectedFaucet.name && selectedFaucet.name.toLowerCase()!=='near' && selectedFaucet && selectedFaucet.name && selectedFaucet.name!=='ARBITRUM(AETH)' ){
       
       invalidTotal =
       parseFloat(values.amount) < selectedFaucet.total_value ? true : false;
