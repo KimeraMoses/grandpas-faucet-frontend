@@ -1,5 +1,5 @@
 # Project Details
-Grandpa's Faucet is project that was assigned to me by [Isaac Mubiru](https://github.com/zac-09), my role was to implement the UI from the Xd mockup. 
+ 
 The application is built in Reactjs, with React Router v6 and material icons
 
 ## Client's Requirements
