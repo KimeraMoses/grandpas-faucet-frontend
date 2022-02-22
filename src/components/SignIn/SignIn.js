@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 //====REDUX IMPORTS====//
 import { useSelector, useDispatch } from "react-redux";
@@ -22,9 +23,31 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [isHuman, setIsHuman] = useState(false);
   const [values, setValues] = useState({
     email: "",
   });
+  const [ip, setIP] = useState("");
+
+  //creating function to load ip address from the API
+  const getData = async () => {
+    try {
+      const res = await fetch(`https://api.ipify.org?format=json`, {
+        method: "GET",
+      });
+      const data = await res.json();
+      setIP(data.ip);
+      // console.log("ip", data);
+    } catch (error) {
+      // console.log("Recap Error", error);
+      setIP("");
+    }
+  };
+
+  useEffect(() => {
+    //passing getData method to the lifecycle method
+    getData();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -58,6 +81,40 @@ const SignIn = () => {
     }
   };
 
+  const VerifyRecaptha = (response, remoteip) => {
+    return async (dispatch) => {
+      try {
+        const res = await fetch(
+          `${process.env.REACT_APP_BASEURL}/accounts/verify-reCaptcha`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              response,
+              remoteip,
+            }),
+            headers: new Headers({
+              "Content-type": "application/json",
+            }),
+          }
+        );
+        const data = await res.json();
+        setIsHuman(data.success);
+      } catch (error) {
+        setError(
+          "Recaptcha verification failed, Please reload page and try again"
+        );
+      }
+    };
+  };
+
+  const RecaptchaHandler = async (value) => {
+    if (value !== null) {
+      await dispatch(VerifyRecaptha(value, ip));
+    }
+    // if value is null recaptcha expired
+    if (value === null) setIsHuman(false);
+  };
+
   return (
     <div className="grandpa__sign_up">
       {(error || message) && <Alert severity="error">{error || message}</Alert>}
@@ -74,13 +131,12 @@ const SignIn = () => {
             onChange={handleChange}
           />
           <div className="grandpa__checkbox">
-            <Checkbox
-              icon={<CircleUnchecked />}
-              checkedIcon={<CircleChecked />}
+            <ReCAPTCHA
+              sitekey={process.env.REACT_APP_SITE_KEY}
+              onChange={RecaptchaHandler}
             />
-            I am Human
           </div>
-          <Button type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading || !isHuman}>
             {isLoading ? "Logging in..." : "Sign In"}
           </Button>
         </form>

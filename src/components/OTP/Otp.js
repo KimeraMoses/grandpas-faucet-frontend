@@ -24,7 +24,6 @@ const Otp = () => {
     otp: "",
   });
   const uuid = user && user.uuid;
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setError("");
@@ -45,7 +44,6 @@ const Otp = () => {
       setError("");
       await dispatch(OTPVerify(+values.otp, uuid));
       setValues({ otp: "" });
-      navigate("/connect-metamask");
     } catch (error) {
       setError("Failed to verify Otp, Please try again later");
     }
@@ -53,7 +51,6 @@ const Otp = () => {
 
   return (
     <>
-      
       {!message && error && (
         <div style={{ textAlign: "left", marginBottom: 5 }}>
           <Alert severity="error">{error}</Alert>

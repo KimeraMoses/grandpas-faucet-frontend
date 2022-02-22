@@ -2,12 +2,12 @@ import React from "react";
 import "./Button.css";
 
 const Button = (props) => {
-    const { type, disabled } = props
+    const { variant, disabled, fullWidth } = props
   return (
     <button
       className={`grandpa__btn ${
-        type === "secondary" ? "grandpa__btn_secondary" : "grandpa__btn_primary"
-      } ${disabled? "btn__disabled" : ""}`}
+        variant === "secondary" ? "grandpa__btn_secondary" :variant==="tartiary"? "grandpa__btn_tartiary": "grandpa__btn_primary"
+      } ${fullWidth? "grandpa__btn_full": ""} ${disabled? "btn__disabled" : ""}`}
       {...props}
     >
       {props.children}

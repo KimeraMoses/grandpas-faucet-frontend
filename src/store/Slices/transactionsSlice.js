@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   transactions: [],
+  transactionsList: [],
   faucets: [],
   isLoading: false,
   fetching: false,
@@ -21,6 +22,19 @@ const transactionsSlice = createSlice({
       state.isLoading = false;
     },
     fetchTransactionsFail: (state, { payload }) => {
+      state.message = payload.message;
+      state.status = payload.status;
+      state.isLoading = false;
+    },
+    fetchAllTransactionsPending: (state) => {
+      state.isLoading = true;
+    },
+    fetchAllTransactionsSuccess: (state, { payload }) => {
+      state.transactionsList = payload;
+      state.status = payload.status;
+      state.isLoading = false;
+    },
+    fetchAllTransactionsFail: (state, { payload }) => {
       state.message = payload.message;
       state.status = payload.status;
       state.isLoading = false;
@@ -47,6 +61,9 @@ export const {
   fetchTransactionsPending,
   fetchTransactionsSuccess,
   fetchTransactionsFail,
+  fetchAllTransactionsPending,
+  fetchAllTransactionsSuccess,
+  fetchAllTransactionsFail,
   fetchFaucetPending,
   fetchFaucetsSuccess,
   fetchFaucetsFail

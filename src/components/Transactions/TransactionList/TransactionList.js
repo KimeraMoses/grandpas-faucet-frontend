@@ -39,7 +39,7 @@ const TransactionList = () => {
                 key={transaction.hash}
                 hashValue={transaction.hash}
                 amount={transaction.amount}
-                name={transaction.token.name}
+                name={transaction.token && transaction.token.name}
               />
             );
           })}

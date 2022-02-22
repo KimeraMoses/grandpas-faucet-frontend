@@ -9,10 +9,10 @@ body {
   margin-bottom: 20px;
 }
 .grandpa__header img {
-  width: 200px;
+  width: 240px;
 }
 .grandpa__wrapper {
-  padding: 30px 40px;
+  padding: 40px 70px;
 }
 .grandpa__content_wrapper {
   display: flex;
@@ -62,15 +62,5 @@ body {
   .grandpa__faq_wrapper {
     padding: 0 10px 20px;
   }
-}
 
-
-/*==== REMOVE THIS AFTER DELETING LINKS==== */
-.grandpa__link__wrapper a{
-  color: #fff;
-  text-decoration: none;
-  user-select: none;
-}
-.grandpa__link__wrapper a:hover{
-  color: #4FBF87;
 }

@@ -1,33 +1,41 @@
-.grandpa__btn{
-    padding: 16px 20px;
-    border-radius: 2px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.4s linear;
-    position: relative;
-    z-index: 1;
-    border: 0;
-    overflow: hidden;
-    border-radius: 10px;
-    margin: 14px 0;
-    width: 100%;
-    box-sizing: border-box;
-    color: #fff;
-    font-weight: 600;
-    user-select: none;
+.grandpa__btn {
+  padding: 16px 20px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.4s linear;
+  position: relative;
+  z-index: 1;
+  border: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 14px 0;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  color: #fff;
+  font-weight: 600;
+  user-select: none;
 }
-.grandpa__btn.grandpa__btn_primary{
-    background-color: #4FBF87;
+.grandpa__btn.grandpa__btn_full {
+  width: 100%;
 }
-.grandpa__btn.grandpa__btn_secondary{
-    background-color: #0964ee;
+.grandpa__btn.grandpa__btn_primary {
+  background-color: #4fbf87;
 }
-.grandpa__btn.btn__disabled{
-    pointer-events: none;
-    cursor: default;
-    color: rgba(0, 0, 0, 0.26);
-    box-shadow: none;
-    background-color: rgba(0, 0, 0, 0.12);
-    
+.grandpa__btn.grandpa__btn_secondary {
+  background-color: rgba(79, 191, 135, 0.1);
+  color: var(--primary__color);
+}
+.grandpa__btn.grandpa__btn_tartiary {
+  background-color: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+.grandpa__btn.btn__disabled {
+  pointer-events: none;
+  cursor: default;
+  color: rgba(0, 0, 0, 0.26);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0.12);
 }

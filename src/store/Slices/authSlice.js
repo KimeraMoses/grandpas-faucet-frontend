@@ -24,6 +24,7 @@ export const authSlice = createSlice({
     autoAuthenticationSuccess(state, {payload}) {
       state.user = payload.user;
       state.token = payload.token;
+      state.apiToken = payload.apiToken;
       state.isLoggedIn = !!state.token;
       state.isLoading = false;
     },

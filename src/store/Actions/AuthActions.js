@@ -1,4 +1,3 @@
-
 import {
   authenticationPending,
   authenticationSuccess,
@@ -18,15 +17,18 @@ import {
 export const Login = (email) => {
   return async (dispatch) => {
     dispatch(authenticationPending());
-    const response = await fetch(`${process.env.REACT_APP_BASEURL}/accounts/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-      }),
-      headers: new Headers({
-        "Content-type": "application/json",
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASEURL}/accounts/login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+        }),
+        headers: new Headers({
+          "Content-type": "application/json",
+        }),
+      }
+    );
     if (!response.ok) {
       const error = await response.json();
       let errorMessage = "";
@@ -48,6 +50,11 @@ export const Login = (email) => {
       apiToken: res.apiToken,
       token: res.token,
     };
+    if (res.data.role.toLowerCase() === "admin") {
+      localStorage.setItem("isAdmin", true);
+    } else {
+      localStorage.setItem("isAdmin", false);
+    }
     SaveTokenInLocalStorage(dispatch, userInfo);
   };
 };
@@ -55,15 +62,18 @@ export const Login = (email) => {
 export const OTPVerify = (otp, uuid) => {
   return async (dispatch) => {
     dispatch(verificationPending());
-    const response = await fetch(`${process.env.REACT_APP_BASEURL}/accounts/verify-otp/${uuid}`, {
-      method: "POST",
-      body: JSON.stringify({
-        otp,
-      }),
-      headers: new Headers({
-        "Content-type": "application/json",
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BASEURL}/accounts/verify-otp/${uuid}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          otp,
+        }),
+        headers: new Headers({
+          "Content-type": "application/json",
+        }),
+      }
+    );
 
     if (!response.ok) {
       const error = await response.json();
@@ -79,16 +89,20 @@ export const OTPVerify = (otp, uuid) => {
       Errormessage = "OTP entered is incorrect";
     }
     dispatch(verificationSuccess(Errormessage));
-    dispatch(isAuthenticated())
-    localStorage.setItem("isVerified", true)
+    dispatch(isAuthenticated());
+    localStorage.setItem("isVerified", true);
   };
 };
+
+
 
 export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
   return async (dispatch) => {
     dispatch(createWalletPending());
-    if (address && address.length>0) {
-        const response = await fetch(`${process.env.REACT_APP_BASEURL}/wallet-address/`, {
+    if (address && address.length > 0) {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASEURL}/wallet-address/`,
+        {
           method: "POST",
           body: JSON.stringify({
             address,
@@ -100,18 +114,19 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
             apiToken: apiToken,
             Authorization: "Bearer " + AuthToken,
           }),
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          dispatch(createWalletFail(error));
         }
-        const res = await response.json();
-        dispatch(createWalletSuccess(res.data));
-        localStorage.setItem("Wallet", JSON.stringify(res.data));
-      }else{
-        return
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        dispatch(createWalletFail(error));
       }
+      const res = await response.json();
+      dispatch(createWalletSuccess(res.data));
+      localStorage.setItem("Wallet", JSON.stringify(res.data));
+    } else {
+      return;
+    }
   };
 };
 
@@ -136,20 +151,20 @@ export const AutoAuthenticate = (dispatch) => {
   const CurrentUser = localStorage.getItem("CurrentUser");
   const isAuth = localStorage.getItem("isVerified");
   const Address = localStorage.getItem("Address");
-  const Wallet =localStorage.getItem("Wallet");
+  const Wallet = localStorage.getItem("Wallet");
   let UserToken = "";
   if (!AuthToken) {
     dispatch(logout());
     return;
   }
-  if(!!isAuth){
-    dispatch(isAuthenticated())
+  if (!!isAuth) {
+    dispatch(isAuthenticated());
   }
-  if(Address && Address.length> 0){
-    dispatch(isConnected(Address))
+  if (Address && Address.length > 0) {
+    dispatch(isConnected(Address));
   }
-  if(Wallet){
-    dispatch(createWalletSuccess(JSON.parse(Wallet)))
+  if (Wallet) {
+    dispatch(createWalletSuccess(JSON.parse(Wallet)));
   }
 
   UserToken = JSON.parse(AuthToken);
