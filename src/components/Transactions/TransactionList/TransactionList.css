@@ -22,7 +22,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
+.failed_fetch_error{
+    padding: 20px;
+}
 @media screen and (max-width: 689px) {
     .grandpa__transaction_token{
         width: 100px;

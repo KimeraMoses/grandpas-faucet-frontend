@@ -6,6 +6,7 @@ import InputField from "../../../../../containers/UI/InputField/InputField";
 import {
   DeleteToken,
   EditTokenDetails,
+  fetchAllTokens,
 } from "../../../../../store/Actions/TokensActions";
 import Button from "../../../../Button/Button";
 import classes from "../../BlackList/Actions/BlackListModal.module.css";
@@ -64,7 +65,7 @@ const TokenModel = (props) => {
     setOpen(false);
   };
 
-  const addToBlackListHandler = async (e) => {
+  const editBlackListHandler = async (e) => {
     e.preventDefault();
     try {
       await dispatch(
@@ -86,7 +87,8 @@ const TokenModel = (props) => {
         )
       );
       setMessage("Token Edited Successfully");
-      setOpen(false)
+      setOpen(false);
+      dispatch(fetchAllTokens(token, apiToken));
     } catch (error) {
       setError("Faild to edit token details");
     }
@@ -96,7 +98,20 @@ const TokenModel = (props) => {
     <div className={classes.new_black_list_wrapper}>
       {!message && error && (
         <div style={{ textAlign: "left", marginBottom: 5 }}>
-          <Alert severity="error">{error}</Alert>
+          <Alert
+            severity="error"
+            action={
+              <Button
+                color="inherit"
+                size="small"
+                onClick={() => setOpen(false)}
+              >
+                Ok
+              </Button>
+            }
+          >
+            {error}
+          </Alert>
         </div>
       )}
       {!isLoading && message && (
@@ -111,7 +126,7 @@ const TokenModel = (props) => {
         <h3>{title}</h3>
         <p>{description}</p>
       </div>
-      <form onSubmit={addToBlackListHandler}>
+      <form onSubmit={editBlackListHandler}>
         {action === "add" && (
           <>
             <InputField
@@ -202,14 +217,16 @@ const TokenModel = (props) => {
               fullWidth={true}
               disabled={isLoading}
               onClick={
-                action === "delete" ? handleTokenDelete : addToBlackListHandler
+                action === "delete" ? handleTokenDelete : editBlackListHandler
               }
             >
               {action === "delete" && isLoading
                 ? "Deleting..."
                 : action === "delete" && !isLoading
                 ? "Delete"
-                : action === "add" && isLoading? "Updating..." :"Update Token"}
+                : isLoading
+                ? "Updating..."
+                : "Update Token"}
             </Button>
           </div>
         </div>

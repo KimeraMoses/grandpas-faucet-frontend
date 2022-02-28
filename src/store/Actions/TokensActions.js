@@ -26,7 +26,6 @@ export const fetchAllTokens = (AuthToken, apiToken) => async (dispatch) => {
       });
       const tokens = await response.json();
       dispatch(fetchTokensSuccess(tokens));
-      console.log("Tokens",tokens)
     } catch (error) {
       dispatch(fetchTokensFail(error));
     }
@@ -82,9 +81,6 @@ export const EditTokenDetails =
       const response = fetch(`${process.env.REACT_APP_BASEURL}/token/${uuid}`, {
         method: "PUT",
         body: JSON.stringify({
-          uuid,
-          AuthToken,
-          apiToken,
           name,
           maximum_amount,
           smart_contract,
@@ -105,11 +101,8 @@ export const EditTokenDetails =
           Authorization: "Bearer " + AuthToken,
         }),
       });
-      const res = await response.json();
-      // console.log(res);
-      dispatch(editTokenSuccess());
+      dispatch(editTokenSuccess(response));
     } catch (error) {
-      dispatch(editTokenFail());
-      // console.log(error);
+      dispatch(editTokenFail(error));
     }
   };

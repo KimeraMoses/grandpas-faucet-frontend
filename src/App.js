@@ -40,7 +40,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/test" element={<EnhancedTable/>}/>
+        <Route path="/test" element={<EnhancedTable />} />
         <Route
           path="*"
           element={
@@ -125,6 +125,16 @@ function App() {
               />
             }
           />
+          <Route
+            path="transaction-blacklisted"
+            element={
+              <MainTemplate
+                type="transactionBlackListed"
+                title="Transaction Status"
+                description="Unfortunately, your account has been blacklisted for the next 24 hours. Please try again later."
+              />
+            }
+          />
           <Route path="confirm" element={<Confirmation />} />
           <Route
             path="transactions"
@@ -143,13 +153,7 @@ function App() {
         </Route>
         <Route
           path="/dashboard/*"
-          element={
-            isAdmin ? (
-              <Dashboard />
-            ) : (
-              <Navigate to="/sign-in" />
-            )
-          }
+          element={isAdmin ? <Dashboard /> : <Navigate to="/sign-in" />}
         >
           <Route path="site-settings" element={<SiteSettings />} />
           <Route path="transactions" element={<UserTransactions />} />

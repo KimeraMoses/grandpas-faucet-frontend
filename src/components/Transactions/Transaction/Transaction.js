@@ -82,7 +82,8 @@ const Transaction = (props) => {
           values.amount,
           values.faucet,
           apiToken,
-          token
+          token,
+          navigate
         )
       );
       setLoading(false);
@@ -93,7 +94,6 @@ const Transaction = (props) => {
     } catch {
       setLoading(false);
       setError("Failed to create transaction!");
-      navigate("/transaction-fail");
     }
   };
 

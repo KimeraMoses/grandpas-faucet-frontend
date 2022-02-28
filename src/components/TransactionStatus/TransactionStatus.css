@@ -20,6 +20,9 @@
     background-color: rgba(245, 34, 45, .1);
 
 }
+.grandpa__transaction.blacklisted{
+    background-color: rgb(250, 173, 20, 0.1);
+}
 .grandpa__transaction svg{
     font-size: 3.2rem;
 
@@ -31,4 +34,7 @@
 .grandpa__transaction.fail svg{
     color: #F5222D;
 
+}
+.grandpa__transaction.blacklisted svg{
+    color: #FAAD14;
 }

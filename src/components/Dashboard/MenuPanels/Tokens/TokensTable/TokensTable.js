@@ -18,6 +18,7 @@ import Spinner from "../../../../../containers/UI/Spinner/Spinner";
 const TokensTable = (props) => {
   const { handleDeleteTokens, handleEditHandler, currentTableData } = props;
   const isLoading = useSelector((state) => state.tokens.fetching);
+ 
   return (
     <TableContainer>
       <Table className={classes.table} aria-label="customized table">

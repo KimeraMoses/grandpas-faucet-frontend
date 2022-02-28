@@ -30,6 +30,7 @@ const Tokens = () => {
   useEffect(() => {
     dispatch(fetchAllTokens(token, apiToken));
   }, [token]);
+ 
 
   let sortedData = [...EnabledTokens];
   if (selected !== null) {

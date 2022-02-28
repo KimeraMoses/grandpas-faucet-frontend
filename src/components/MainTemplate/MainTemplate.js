@@ -44,6 +44,8 @@ const MainTemplate = (props) => {
           <TransactionStatus status="success" />
         ) : type === "transactionFail" ? (
           <TransactionStatus status="fail" />
+        ) : type === "transactionBlackListed" ? (
+          <TransactionStatus status="blacklisted" status="blacklisted" />
         ) : (
           <form>
             <input
@@ -51,15 +53,6 @@ const MainTemplate = (props) => {
               placeholder="Enter Email Address…"
               className="grandpa__input_field"
             />
-            {(type === "signin" || type === "check") && (
-              <div className="grandpa__checkbox">
-                <Checkbox
-                  icon={<CircleUnchecked />}
-                  checkedIcon={<CircleChecked />}
-                />
-                I am Human
-              </div>
-            )}
             <Button>Sign In</Button>
           </form>
         )}

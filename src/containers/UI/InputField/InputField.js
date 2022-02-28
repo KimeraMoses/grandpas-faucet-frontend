@@ -1,5 +1,4 @@
 import { Switch, withStyles } from "@material-ui/core";
-import { green, grey } from "@material-ui/core/colors";
 import React from "react";
 
 import classes from "./InputField.module.css";

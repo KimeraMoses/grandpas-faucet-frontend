@@ -59,8 +59,8 @@ export const fetchAllTransactions =
       } catch (error) {
         dispatch(fetchAllTransactionsFail(error));
       }
-    }else{
-      return
+    } else {
+      return;
     }
   };
 
@@ -91,7 +91,8 @@ export const CreateTransaction = (
   amount,
   token_uuid,
   apiToken,
-  AuthToken
+  AuthToken,
+  navigate
 ) => {
   return async (dispatch) => {
     dispatch(createTransactionPending());
@@ -116,10 +117,15 @@ export const CreateTransaction = (
     if (!response.ok) {
       const error = await response.json();
       dispatch(createTransactionFail(error));
-      // console.log(error);
+      console.log("T Create Error", error);
+      if (error.err === "Wallet has been blacklisted.") {
+        navigate("/transaction-blacklisted");
+      } else {
+        navigate("/transaction-fail");
+      }
     }
     const res = await response.json();
-    // console.log(res);
+    console.log("T create success", res);
     dispatch(createTransactionSuccess(res.data));
   };
 };
