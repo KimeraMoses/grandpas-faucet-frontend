@@ -5,11 +5,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import classes from "./TransactionsTable.module.css";
 import { useSelector } from "react-redux";
 import Spinner from "../../../../../containers/UI/Spinner/Spinner";
-import { Skeleton } from "@material-ui/lab";
 
 const TransactionsTable = (props) => {
   const isLoading = useSelector((state) => state.transactions.isLoading);

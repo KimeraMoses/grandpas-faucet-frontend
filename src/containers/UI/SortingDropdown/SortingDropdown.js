@@ -10,7 +10,7 @@ import ArrowDropDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import classes from "../Dropdown/CustomDropdown.module.css";
 
 const SortingDropdown = (props) => {
-  const { selected, setSelected, isSelect, ArrayData } = props;
+  const { selected, setSelected, ArrayData } = props;
   const [selectedName, setSelectedName] = useState(selected)
   const [isActive, setIsActive] = useState(false);
   const selectedItemHandler = (option) => {

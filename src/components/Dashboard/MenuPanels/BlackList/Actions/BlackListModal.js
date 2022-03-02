@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomDropdown from "../../../../../containers/UI/Dropdown/CustomDropdown";
 import {
@@ -18,13 +18,13 @@ const BlackListModal = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllWallet(token, apiToken));
-  }, []);
-  let selectedWallet;
+  }, [token, apiToken,dispatch]);
+
+  let selectedWallet = WalletData.filter(
+    (wallet) => wallet.address === selected
+  )[0];
   useEffect(() => {
-    selectedWallet = WalletData.filter(
-      (wallet) => wallet.address === selected
-    )[0];
-  }, [selected]);
+  }, [selectedWallet]);
   const deleteBlackList = async(e) => {
     e.preventDefault();
     await dispatch(DeleteBlackList(selected, token, apiToken))

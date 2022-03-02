@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 //===MUI IMPORTS===
 import { Box, Modal } from "@material-ui/core";
 
 //===COMPONENTS IMPORTS===
 import classes from "./Modal.module.css";
-import { useSelector } from "react-redux";
 import BlackListModal from "../../../components/Dashboard/MenuPanels/BlackList/Actions/BlackListModal";
 import TokenModel from "../../../components/Dashboard/MenuPanels/Tokens/TokenActions/TokenModal";
 
@@ -17,7 +16,7 @@ export const ACTIONTYPE = {
 };
 
 const ModalComponent = (props) => {
-  const { open, setOpen, message, type, action,selected,setSelected } = props;
+  const { open, setOpen, type,selected,setSelected } = props;
 
   const handleClose = () => setOpen(false);
 

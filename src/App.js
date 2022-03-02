@@ -1,13 +1,12 @@
 import { useEffect } from "react";
 // import { loadReCaptcha } from 'react-google-recaptcha';
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Confirmation from "./components/Confirmation/Confirmation";
 import Home from "./components/Home/Home";
 import MainTemplate from "./components/MainTemplate/MainTemplate";
-import SignIn from "./components/SignIn/SignIn";
 import Transactions from "./components/Transactions/Transactions";
 import Login from "./components/Home/Login";
-import React, { Component } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AutoAuthenticate } from "./store/Actions/AuthActions";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -21,7 +20,6 @@ import EnhancedTable from "./components/Dashboard/SortableTable";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const isVerified = useSelector((state) => state.auth.isAuth);
   const hasAddress = useSelector((state) => state.auth.hasAddress);
@@ -35,7 +33,7 @@ function App() {
   useEffect(() => {
     AutoAuthenticate(dispatch);
     // loadReCaptcha()
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
@@ -67,7 +65,7 @@ function App() {
                 <Navigate to="/connect-metamask" />
               ) : (
                 <MainTemplate
-                  type="otp"
+                  pageType="otp"
                   title="OTP"
                   description="Please enter the OTP received at your email addresses to continue."
                 />
@@ -80,7 +78,7 @@ function App() {
               !isLoggedIn &&
               !isVerified && (
                 <MainTemplate
-                  type="whiteBoard"
+                  pageType="whiteBoard"
                   title="WhiteBoard Crypto"
                   description="Please click the button below to setup your account on WhiteBoard Crypto."
                 />
@@ -98,7 +96,7 @@ function App() {
                 <Navigate to="/confirm-otp" />
               ) : (
                 <MainTemplate
-                  type="metaMask"
+                  pageType="metaMask"
                   title="MetaMask Wallet"
                   description="Please click the button below to connect your MetaMask Wallet account."
                 />
@@ -109,7 +107,7 @@ function App() {
             path="transaction-success"
             element={
               <MainTemplate
-                type="transactionSuccess"
+                pageType="transactionSuccess"
                 title="Transaction Status"
                 description="Congratulations! Your transaction has been completed successfully."
               />
@@ -119,7 +117,7 @@ function App() {
             path="transaction-fail"
             element={
               <MainTemplate
-                type="transactionFail"
+                pageType="transactionFail"
                 title="Transaction Status"
                 description="Oh no! Something went wrong and your transaction could not be completed."
               />
@@ -129,7 +127,7 @@ function App() {
             path="transaction-blacklisted"
             element={
               <MainTemplate
-                type="transactionBlackListed"
+                pageType="transactionBlackListed"
                 title="Transaction Status"
                 description="Unfortunately, your account has been blacklisted for the next 24 hours. Please try again later."
               />

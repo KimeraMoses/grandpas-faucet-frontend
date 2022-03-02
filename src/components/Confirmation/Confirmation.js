@@ -1,7 +1,5 @@
-import { Checkbox, FormControlLabel } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
+import { Checkbox } from "@material-ui/core";
 import CircleChecked from "@material-ui/icons/CheckCircleOutline";
-import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
 import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 import React from "react";
 import "./Confirmation.css";

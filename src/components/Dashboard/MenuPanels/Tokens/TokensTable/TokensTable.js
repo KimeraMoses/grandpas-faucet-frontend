@@ -9,10 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import classes from "../../Transactions/TransactionsTable/TransactionsTable.module.css";
 import { IconButton } from "@material-ui/core";
-import { TrashIcon } from "../../../../../containers/Icons/Icons";
-
 import { useSelector } from "react-redux";
-import { Skeleton } from "@material-ui/lab";
 import Spinner from "../../../../../containers/UI/Spinner/Spinner";
 
 const TokensTable = (props) => {

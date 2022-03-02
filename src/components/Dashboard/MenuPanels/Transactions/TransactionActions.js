@@ -1,5 +1,4 @@
 import React from "react";
-import CustomDropdown from "../../../../containers/UI/Dropdown/CustomDropdown";
 import SortingDropdown from "../../../../containers/UI/SortingDropdown/SortingDropdown";
 import Button from "../../../Button/Button";
 import classes from "./TransactionActions.module.css";
@@ -7,7 +6,6 @@ import classes from "./TransactionActions.module.css";
 const TransactionActions = (props) => {
   const {
     transactions,
-    setOpen,
     AddNewBlackListHandler,
     SortingArray,
     selected,

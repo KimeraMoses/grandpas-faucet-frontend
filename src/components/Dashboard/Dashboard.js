@@ -15,11 +15,9 @@ const Dashboard = () => {
     location.pathname.lastIndexOf("/") + 1
   );
   let menuTitle = "";
-  let isActive = false;
   switch (location.pathname) {
     case `/dashboard/${DashMenuTitle}`:
       menuTitle = DashMenuTitle.replace(/-/g, " ");
-      isActive = true;
       break;
     default:
       menuTitle = "DashBoard";

@@ -1,7 +1,4 @@
-import { Checkbox, FormControlLabel } from "@material-ui/core";
-import CircleChecked from "@material-ui/icons/CheckCircleOutline";
-import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
-import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
+
 import React, { useState } from "react";
 import "../SignIn/SignIn.css";
 import Button from "../Button/Button";
@@ -11,19 +8,19 @@ import WhiteBoard from "../WhiteBoard/WhiteBoard";
 import MetaMask from "../MetaMask/MetaMask";
 import TransactionStatus from "../TransactionStatus/TransactionStatus";
 import { Alert } from "@material-ui/lab";
-import { useSelector } from "react-redux";
 
 const MainTemplate = (props) => {
-  const { title, description, type, action } = props;
+  const { title, description, pageType } = props;
   const [message, setMessage] = useState("No account with your email found!");
-  const user = useSelector((state) => state.auth.user);
+  // const user = useSelector((state) => state.auth.user);
 
   return (
     <div className="grandpa__sign_up">
-      {type === "otp" ? (
-        <Alert severity="success">Your OTP is {user && user.otp}</Alert>
+      {pageType === "otp" ? (
+        // <Alert severity="success">Your OTP is {user && user.otp}</Alert>
+        <Alert severity="success">Please check your email for the OTP</Alert>
       ) : (
-        type === "whiteBoard" && (
+        pageType === "whiteBoard" && (
           <Alert severity="error" icon={false}>
             {message}
           </Alert>
@@ -32,20 +29,20 @@ const MainTemplate = (props) => {
       <h4>{title}</h4>
       <p>{description}</p>
       <div className="grandpa__form_wrapper">
-        {type === "otp" ? (
+        {pageType === "otp" ? (
           <Otp />
-        ) : type === "confirm" ? (
+        ) : pageType === "confirm" ? (
           <Confirmation />
-        ) : type === "whiteBoard" ? (
+        ) : pageType === "whiteBoard" ? (
           <WhiteBoard setMessage={setMessage} />
-        ) : type === "metaMask" ? (
+        ) : pageType === "metaMask" ? (
           <MetaMask />
-        ) : type === "transactionSuccess" ? (
+        ) : pageType === "transactionSuccess" ? (
           <TransactionStatus status="success" />
-        ) : type === "transactionFail" ? (
+        ) : pageType === "transactionFail" ? (
           <TransactionStatus status="fail" />
-        ) : type === "transactionBlackListed" ? (
-          <TransactionStatus status="blacklisted" status="blacklisted" />
+        ) : pageType === "transactionBlackListed" ? (
+          <TransactionStatus status="blacklisted" />
         ) : (
           <form>
             <input

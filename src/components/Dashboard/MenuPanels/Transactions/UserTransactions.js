@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { fetchAllTransactions } from "../../../../store/Actions/TransactionsActions";
-import Button from "../../../Button/Button";
 import Pagination from "../../Pagination/Pagination";
 import TransactionActions from "./TransactionActions";
 import TransactionsTable from "./TransactionsTable/TransactionsTable";
@@ -28,7 +27,7 @@ const UserTransactions = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTransactions(token, apiToken));
-  }, [token]);
+  }, [token,apiToken,dispatch]);
 
   let sortedData = [...transactionsList];
   if (selected !== null) {

@@ -11,9 +11,9 @@ const TransactionList = () => {
   const dispatch = useDispatch()
   const { token, apiToken } = useSelector((state) => state.auth);
   const TransactionCard = (props) => {
-    const { hashValue, amount, name, key } = props;
+    const { hashValue, amount, name } = props;
     return (
-      <div className="grandpa__transaction__card_wrapper" key={key}>
+      <div className="grandpa__transaction__card_wrapper">
         {isLoading ? (
           <Skeleton width="100%" />
         ) : (

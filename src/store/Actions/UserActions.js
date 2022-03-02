@@ -1,4 +1,4 @@
-import { baseUrl } from "..";
+
 import {
   fetchSettingsFail,
   fetchSettingsPending,

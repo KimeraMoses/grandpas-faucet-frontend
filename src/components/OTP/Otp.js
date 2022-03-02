@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 //====REDUX IMPORTS====//
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +10,12 @@ import { Alert } from "@material-ui/lab";
 //====COMPONENT IMPORTS====//
 import Button from "../Button/Button";
 import "../SignIn/SignIn.css";
-import { useEffect } from "react";
 
 const Otp = () => {
   const message = useSelector((state) => state.auth.error);
   const user = useSelector((state) => state.auth.user);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [error, setError] = useState(message);
   const [values, setValues] = useState({
     otp: "",
@@ -27,7 +24,7 @@ const Otp = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setError("");
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: value });
   };
 
   const OtpVerificationHandler = async (e) => {

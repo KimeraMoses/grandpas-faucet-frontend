@@ -32,7 +32,7 @@ const SiteSettings = () => {
 
   useEffect(() => {
     dispatch(fetchSiteSettings(token, apiToken));
-  }, [token]);
+  }, [token,apiToken, dispatch]);
   const handleInput = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });

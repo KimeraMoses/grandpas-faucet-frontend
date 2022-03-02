@@ -29,7 +29,7 @@ const Tokens = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTokens(token, apiToken));
-  }, [token]);
+  }, [token,apiToken, dispatch]);
  
 
   let sortedData = [...EnabledTokens];

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Button from "../../../Button/Button";
 import classes from "./BlackList.module.css";
 import BlackListedTransactions from "./BlackListedTransactions/BlackListedTransactions";
 import TransactionActions from "../Transactions/TransactionActions";
@@ -21,7 +20,6 @@ const SortingArray = [
 const BlackList = () => {
   const { token, apiToken } = useSelector((state) => state.auth);
   const blackList = useSelector((state) => state.blackList.blackList);
-  const isLoading = useSelector((state) => state.blackList.isLoading);
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("Wallet Address");
   const [selectedToken, setSelectedToken] = useState("Select Wallet Address");
@@ -30,7 +28,7 @@ const BlackList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     dispatch(fetchBlackList(token, apiToken));
-  }, [token]);
+  }, [token,apiToken,dispatch]);
 
   let sortedData = [...blackList];
   if (selected !== null) {

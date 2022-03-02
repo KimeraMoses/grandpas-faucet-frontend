@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -8,10 +8,6 @@ import { Login } from "../../store/Actions/AuthActions";
 
 //====MUI IMPORTS====//
 import { Alert } from "@material-ui/lab";
-import { Checkbox, FormControlLabel } from "@material-ui/core";
-import CircleChecked from "@material-ui/icons/CheckCircleOutline";
-import CircleCheckedFilled from "@material-ui/icons/CheckCircle";
-import CircleUnchecked from "@material-ui/icons/RadioButtonUnchecked";
 
 //====COMPONENT IMPORTS===//
 import Button from "../Button/Button";
@@ -52,7 +48,7 @@ const SignIn = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setError("");
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: value });
   };
 
   const LoginHandler = async (e) => {

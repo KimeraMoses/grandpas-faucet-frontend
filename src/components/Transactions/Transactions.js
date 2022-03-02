@@ -14,7 +14,7 @@ const Transactions = (props) => {
   useEffect(() => {
     dispatch(fetchTransactions(token, apiToken));
     dispatch(fetchFaucets(token, apiToken));
-  }, []);
+  }, [token, apiToken, dispatch]);
   return (
     <div className="grandpa__transactions">
       <div className="grandpa__single_transaction">

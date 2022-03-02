@@ -8,20 +8,10 @@ import ArrowDropDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 //===COMPONENT IMPORTS===
 import classes from "./CustomDropdown.module.css";
-const SortMethodsArray = [
-  { name: "Alphabetical", value: "alphabetical" },
-  {
-    name: "Asending",
-    value: "asending",
-  },
-  {
-    name: "Decending",
-    value: "decending",
-  },
-];
+
 
 const CustomDropdown = (props) => {
-  const { selected, setSelected, isSelect, ArrayData } = props;
+  const { selected, setSelected, ArrayData } = props;
   const [isActive, setIsActive] = useState(false);
   const selectedItemHandler = (name) => {
     setSelected(name);

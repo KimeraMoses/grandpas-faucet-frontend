@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Button from "../Button/Button";
-import { Alert } from "@material-ui/lab";
 
 const WhiteBoard = (props) => {
   const { setMessage } = props;

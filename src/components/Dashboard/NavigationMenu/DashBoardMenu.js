@@ -2,14 +2,11 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 //===MUI IMPORTS===
-import NewUnivIcon from "@material-ui/icons/AccountBalance";
-//===REDUX IMPORTS===
 
 //===COMPONENT IMPORTS===
 // import { AdminMenuItems, UserMenuItems, CordinatorsMenu } from "./MenuItems";
 import {
   BlackListIcon,
-  SettingIcon,
   TokensIcon,
   TransactionsIcon,
   SiteSettingsIcon,

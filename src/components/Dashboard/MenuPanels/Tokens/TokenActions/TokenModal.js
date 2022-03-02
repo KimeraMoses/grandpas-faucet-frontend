@@ -1,7 +1,6 @@
 import { Alert } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import CustomDropdown from "../../../../../containers/UI/Dropdown/CustomDropdown";
 import InputField from "../../../../../containers/UI/InputField/InputField";
 import {
   DeleteToken,
@@ -33,9 +32,8 @@ const TokenModel = (props) => {
     dev_wallet_address: "",
     status: true,
   });
-  let selectedToken;
+  let selectedToken = EnabledTokens.filter((token) => token.uuid === selected)[0];
   useEffect(() => {
-    selectedToken = EnabledTokens.filter((token) => token.uuid === selected)[0];
     setValues({
       name: selectedToken.name,
       max_amount: selectedToken.maximum_amount,
@@ -49,7 +47,7 @@ const TokenModel = (props) => {
       dev_wallet_address: selectedToken.wallet_address_dev,
       status: selectedToken.enabled,
     });
-  }, [selected]);
+  }, [selected,selectedToken]);
   const handleInput = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
@@ -60,7 +58,6 @@ const TokenModel = (props) => {
 
   const handleTokenDelete = async (e) => {
     e.preventDefault();
-    console.log("Deleted", selected);
     await dispatch(DeleteToken(selected, token, apiToken));
     setOpen(false);
   };

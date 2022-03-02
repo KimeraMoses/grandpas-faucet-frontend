@@ -6,13 +6,9 @@ import "../SignIn/SignIn.css";
 //====MATIC IMPORTS====//
 import Web3 from "web3";
 import WalletConnectProvider from "@maticnetwork/walletconnect-provider";
-import { useNavigate } from "react-router-dom";
 import { CreateWallet } from "../../store/Actions/AuthActions";
 import { useSelector, useDispatch } from "react-redux";
 import { isConnected } from "../../store/Slices/authSlice";
-const MaticPoSClient = require("@maticnetwork/maticjs").MaticPOSClient;
-const Network = require("@maticnetwork/meta/network");
-const Matic = require("@maticnetwork/maticjs");
 const config = {
   posRootERC20: "0x655F2166b0709cd575202630952D71E2bB0d61Af",
   posChildERC20: "0xfe4F5145f6e09952a5ba9e956ED0C25e3Fa4c7F1",
@@ -30,27 +26,20 @@ const config = {
 };
 
 const MetaMask = () => {
-  const [Networkid, setNetworkid] = useState(0);
   const [account, setAccount] = useState("");
   const [loading, setLoading] = useState(false);
-  const [inputValue, setInputValue] = useState("");
-  const [burnHash, setBurnHash] = useState("");
-  const [isNavigate, setNavigate] = useState(false);
-  const [maticProvider, setMaticProvider] = useState();
-  const [ethereumprovider, setEthereumProvider] = useState();
-  const Navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, token, apiToken } = useSelector((state) => state.auth);
   const uuid = user && user.uuid;
 
-  const Address = useSelector((state) => state.auth.address);
-
   const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
-      await window.ethereum.enable();
+      // await window.ethereum.enable();
+      await window.ethereum.send('eth_requestAccounts');
     } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
+      // window.web3 = new Web3(window.web3.currentProvider);
+      window.web3 = new Web3(window.ethereum);
     } else {
       window.alert(
         "Non-Ethereum browser detected. You should consider trying MetaMask!"
@@ -59,41 +48,39 @@ const MetaMask = () => {
   };
 
   useEffect(() => {
+    const createWallet = (account) => {
+      dispatch(CreateWallet(account, uuid, token, apiToken));
+      dispatch(isConnected(account));
+    };
+
     if (account.length > 10) {
       createWallet(account);
     }
-  }, [account]);
+  }, [account,uuid, token,apiToken, dispatch]);
 
-  const createWallet = (account) => {
-    dispatch(CreateWallet(account, uuid, token, apiToken));
-    dispatch(isConnected(account));
-  };
   const loadBlockchainData = async () => {
     setLoading(true);
-    const maticProvider = new WalletConnectProvider({
+    new WalletConnectProvider({
       host: config.MATIC_RPC,
-      callbacks: {
-        onConnect: console.log("matic connected"),
-        onDisconnect: console.log("matic disconnected!"),
-      },
+      // callbacks: {
+      //   onConnect: console.log("matic connected"),
+      //   onDisconnect: console.log("matic disconnected!"),
+      // },
     });
 
-    const ethereumProvider = new WalletConnectProvider({
+    new WalletConnectProvider({
       host: config.ETHEREUM_RPC,
-      callbacks: {
-        onConnect: console.log("mainchain connected"),
-        onDisconnect: console.log("mainchain disconnected"),
-      },
+      // callbacks: {
+      //   onConnect: console.log("mainchain connected"),
+      //   onDisconnect: console.log("mainchain disconnected"),
+      // },
     });
 
-    setMaticProvider(maticProvider);
-    setEthereumProvider(ethereumProvider);
     const web3 = window.web3;
 
     const accounts = await web3.eth.getAccounts();
     setAccount(accounts[0]);
     const networkId = await web3.eth.net.getId();
-    setNetworkid(networkId);
 
     if (networkId === config.ETHEREUM_CHAINID) {
       setLoading(false);

@@ -117,7 +117,6 @@ export const CreateTransaction = (
     if (!response.ok) {
       const error = await response.json();
       dispatch(createTransactionFail(error));
-      console.log("T Create Error", error);
       if (error.err === "Wallet has been blacklisted.") {
         navigate("/transaction-blacklisted");
       } else {
@@ -125,7 +124,6 @@ export const CreateTransaction = (
       }
     }
     const res = await response.json();
-    console.log("T create success", res);
     dispatch(createTransactionSuccess(res.data));
   };
 };

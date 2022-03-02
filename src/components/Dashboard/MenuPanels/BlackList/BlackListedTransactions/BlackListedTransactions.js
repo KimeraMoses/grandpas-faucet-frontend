@@ -8,10 +8,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import classes from "../../Transactions/TransactionsTable/TransactionsTable.module.css";
 import { IconButton } from "@material-ui/core";
-import DescriptionIcon from "@material-ui/icons/Description";
 import { useSelector } from "react-redux";
 import Spinner from "../../../../../containers/UI/Spinner/Spinner";
-const humanizeDuration = require("humanize-duration");
 
 const BlackListedTransactions = (props) => {
   const { handleDeleteBlackList, currentTableData } = props;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Web3 from "web3";
 import "./Transaction.css";
 import Button from "../../Button/Button";
@@ -14,7 +14,6 @@ const Transaction = (props) => {
   const wallet = useSelector((state) => state.auth.wallet);
   const { apiToken, token } = useSelector((state) => state.auth);
   const Faucets = useSelector((state) => state.transactions.faucets);
-  const isFetchingFaucets = useSelector((state) => state.transactions.fetching);
   const userAddress = useSelector((state) => state.auth.address);
   const [selected, setSelected] = useState("Select One");
   const [error, setError] = useState("");
@@ -29,7 +28,7 @@ const Transaction = (props) => {
   let invalidData = true;
   const handleOnChange = (event) => {
     const { name, value } = event.target;
-    setValues({ ...values, [name]: event.target.value });
+    setValues({ ...values, [name]: value });
     setError("");
     setMessage("");
   };
@@ -119,7 +118,7 @@ const Transaction = (props) => {
 
   useEffect(() => {
     getAddress();
-  }, []);
+  });
   useEffect(() => {}, [wallet]);
 
   return (
