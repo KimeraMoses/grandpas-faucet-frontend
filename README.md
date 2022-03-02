@@ -41,7 +41,7 @@ export NODE_OPTIONS=--max_old_space_size=4096
 npm run build
 ```
 
-6- Copy the contents ```/build``` folder to the root of your host.
+6- Copy the contents ```/build``` folder to the root of your host with Nginx/Apache and SSL.
 
 7- Proceed to setup the API at the _REACT_APP_BASEURL_ if not done already.
 
