@@ -2,12 +2,13 @@ import React, { useState } from "react";
 
 //====REDUX IMPORTS====//
 import { useDispatch, useSelector } from "react-redux";
-import { OTPVerify } from "../../store/Actions/AuthActions";
+import { OTPVerify,RequestOtp } from "../../store/Actions/AuthActions";
 
 //====MUI IMPORTS====//
 import { Alert } from "@material-ui/lab";
 
 //====COMPONENT IMPORTS====//
+import classes from "./Otp.module.css";
 import Button from "../Button/Button";
 import "../SignIn/SignIn.css";
 
@@ -17,10 +18,22 @@ const Otp = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
   const [error, setError] = useState(message);
+  const [resending, setIsLoading]=useState(false)
   const [values, setValues] = useState({
     otp: "",
   });
   const uuid = user && user.uuid;
+  const RequestOtpHandler= async()=>{
+    setIsLoading(true)
+    try{
+      await dispatch(RequestOtp(uuid))
+      setIsLoading(false)
+    }catch(error){
+      setError("Failed to resend Otp, try again")
+      setIsLoading(false)
+    }
+    
+  }
   const handleChange = (event) => {
     const { name, value } = event.target;
     setError("");
@@ -29,7 +42,6 @@ const Otp = () => {
 
   const OtpVerificationHandler = async (e) => {
     e.preventDefault();
-
     if (values.otp.length < 1) {
       return setError("Please enter the otp sent to your email");
     }
@@ -67,9 +79,15 @@ const Otp = () => {
           onChange={handleChange}
           className="grandpa__input_field"
         />
-        <Button type="submit" disabled={isLoading}>
-          {isLoading ? "Verifying otp..." : "Continue"}
-        </Button>
+        <div className={classes.otp__action_wrapper}>
+          {/* <div className="resend__otp_wrapper"></div> */}
+          <Button disabled={resending} variant="secondary" onClick={RequestOtpHandler}>
+            {resending ? "Requesting otp..." : "Resend Otp"}
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Verifying otp..." : "Continue"}
+          </Button>
+        </div>
       </form>
     </>
   );

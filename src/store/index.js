@@ -5,6 +5,7 @@ import settingReducer from "./Slices/settingsSlice";
 import tokenReducer from "./Slices/tokensSlice";
 import blackListReducer from "./Slices/blackListSlice";
 import walletReducer from "./Slices/walletSlice";
+import otpReducer from "./Slices/otpSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     tokens: tokenReducer,
     blackList: blackListReducer,
     wallet: walletReducer,
+    otp: otpReducer
 
   },
 });
