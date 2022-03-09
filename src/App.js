@@ -31,7 +31,6 @@ function App() {
   const isAdmin = userEmail === adminEmail ? true : false;
   const isAuthenticated = isLoggedIn && isVerified && hasAddress && hasWallet;
 
-  console.log(isAdmin);
   useEffect(() => {
     AutoAuthenticate(dispatch);
   }, [dispatch]);
