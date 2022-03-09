@@ -1,0 +1,55 @@
+.grandpa__transaction_wrapper {
+  background-color: #fff;
+  color: #000;
+  border-radius: 10px;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.grandpa__transaction_wrapper h4 {
+  margin: 5px 0;
+}
+.grandpa__transaction_wrapper p {
+  margin: 0;
+  color: #8c8c8c;
+  font-size: 14px;
+  padding-bottom: 16px;
+}
+
+.grandpa__multi_column_field,
+.grandpa__input_field {
+  box-sizing: border-box;
+  font: inherit;
+  color: currentColor;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  display: block;
+  min-width: 0;
+  background: none;
+  letter-spacing: inherit;
+  animation-duration: 10ms;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.grandpa__input_field {
+  background-color: #fafafa;
+}
+.grandpa__input_address_field {
+  font-size: 11.5px;
+}
+.grandpa__input_field:focus {
+  outline: none;
+}
+
+.grandpa__multi_column_fields_wrapper {
+  display: flex;
+}
+.grandpa__multi_column_field:last-child {
+  margin-left: 10px;
+}

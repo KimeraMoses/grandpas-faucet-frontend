@@ -1,0 +1,20 @@
+.transactions_header_wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+.transactions_header_action_buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.pdf_btn_wrapper{
+    margin-right: 10px;
+}
+@media screen and (max-width: 798px) {
+    .transactions_header_wrapper{
+        flex-direction: column;
+    }
+}

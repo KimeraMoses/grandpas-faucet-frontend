@@ -1,0 +1,19 @@
+import React, { useState } from "react";
+import Button from "../Button/Button";
+
+const WhiteBoard = (props) => {
+  const { setMessage } = props;
+  const [loading, setLoading] = useState(false);
+  const RedirectWhiteBoard = () => {
+    setLoading(true);
+    setMessage("Redirecting to Whiteboard Crypto...");
+    window.location.replace("https://whiteboardcrypto.com/whiteboardcrypto-club/");
+  };
+  return (
+    <Button onClick={RedirectWhiteBoard}>
+      {loading ? "Redirecting..." : "Setup WhiteBoard Crypto Account"}
+    </Button>
+  );
+};
+
+export default WhiteBoard;

@@ -1,0 +1,22 @@
+.grandpa__transactions{
+    width: 100%;
+    display: flex;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    color: #000;
+}
+
+.grandpa__transaction_list{
+    background-color: #FAFAFA;
+    color: #000000;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+@media screen and (max-width: 680px) {
+    .grandpa__transactions{
+        flex-direction: column;
+    }
+
+}

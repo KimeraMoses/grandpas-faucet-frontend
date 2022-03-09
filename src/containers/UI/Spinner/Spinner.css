@@ -1,0 +1,7 @@
+.MuiLinearProgress-colorSecondary{
+  background: linear-gradient(90deg, rgba(79,191,135,0.25) 38%, rgba(38,38,38,1) 100%)!important;
+
+}
+.MuiLinearProgress-barColorSecondary{
+  background-color: var(--primary__color)!important;
+}

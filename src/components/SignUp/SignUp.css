@@ -1,0 +1,52 @@
+.grandpa__sign_up{
+    background-color: #fff;
+    color: #000;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    align-items: center;
+    padding: 10px 20px;
+    text-align: center;
+}
+.grandpa__sign_up h4{
+    margin: 0;
+}
+.grandpa__sign_up p{
+    margin: 0;
+    color: #8C8C8C;
+    font-size: 14px;
+    padding-bottom: 16px;
+}
+.grandpa__form_wrapper{
+    width: 100%;
+}
+
+.grandpa__input_field{
+  box-sizing: border-box;
+  font: inherit;
+  color: currentColor;
+  width: 100%;
+  border: 0;
+  margin: 0;
+  display: block;
+  min-width: 0;
+  background: none;
+  letter-spacing: inherit;
+  animation-duration: 10ms;
+  -webkit-tap-highlight-color: transparent;
+  border: 1px solid #E8E8E8;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.grandpa__input_field:focus{
+    outline: none;
+}
+.grandpa__checkbox{
+    text-align: left;
+    padding: 4px;
+    border: 1px solid #E8E8E8;
+    border-radius: 10px;
+}
+
