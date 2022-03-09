@@ -1,69 +1,48 @@
-# Project Details
+# Grandpa's Faucet Frontend Setup
+>NOTE: You must have **Node 16+ and npm** installed.
 
-The application is built in Reactjs, with React Router v6, Redux and material icons
+1- SSH into your server and navigate to /var/www/html 
 
-## _Client's Requirements_
+```sh
+cd /var/www/html
+```
 
-The tasks are as follows:
+2- Copy the repository to your server and move into the repository
+```sh
+git clone https://gitlab.com/m2m-node-react-projects/reactjs/grandpas-faucet-frontend
+cd grandpas-faucet-frontend
+```
 
-1. Responsive and cross-browser page background and footer
-2. Login by Button to connect to Metamask Wallet via Polygon(matic.js) library
-3. OTP form and verification if member
-4. Redirection link to https://whiteboardcrypto.com/ after login if not a member
-5. FAQs accordion
-6. Localization (English only)
-7. Form
+3- Edit the .env file and make the changes below
 
-- Amount Input field + Captcha
-- "Select with dummy data (will be loaded from DB)
-  Options: MATIC, FTM, ETH, AVAX, ONE, ETH, NEAR, CELO, BNB, FTM"
-- Request button disabled till wallet address/IP is AJAX-verified from backend as not blacklisted with valid amount
+ | Variable | Type | Description |
+| --- | --- | --- |
+| `REACT_APP_APIKEY` | string | API key for making requests to the backend |
+| `REACT_APP_BASEURL` | string | API URL |
+| `REACT_APP_SITE_KEY` | string | Google Recaptcha v2 site key. See https://cloud.google.com/recaptcha-enterprise/docs/create-key  |
 
-8. Transaction Status / Blacklisted user components
-9. Display last 5 successful transactions below input section just before FAQ accordion(updated every second).
-10. Connect frontend to backend
-11. Testing and Debugging
-12. Documentation (Readme)
+*Example*
+```
+REACT_APP_APIKEY=371687a8-8006-4987-bbcf-29d41c56695b
+REACT_APP_BASEURL=https://api.grandpasfaucet.com/api
+REACT_APP_SITE_KEY=XXXX
+```
 
-After the first design, other requirements recieved were
-Also please rename the routes:
+4- Install npm modules
 
-- otp-confirm to confirm-otp
-- whiteboard to sign-up
-- meta-mask to connect-metamask
-  Also remove the Captcha from the confirm page as it is only accessible to logged in users so they must have verified the OTP.
-  Lastly, please redirect all unknown pages to the sign-in page.
-  Remember to create a base module for API connections to the backend that will get credentials from a .env file.
-  It could be of the form
-  apiRequest(method, url, payload) {
-  try {
-  // adios, request, fetch or anything you use here.
-  }
-  catch(error){
-  // format general errors from API here for localization
-  }
-  }
+```sh
+npm i
+```
 
-# Configuring the Recaptcha functionality
+5- Build the app
 
-## _Creating an account for the required domain_
+```sh
+export NODE_OPTIONS=--max_old_space_size=4096
+npm run build
+```
 
-Before starting the project, please visit google recaptcha website [here](https://www.google.com/recaptcha/admin/create) to configure the recaptcha functionality with your new domain.
-- The label can be anything related to the domain eg. grandpa-faucet
-- For the reCAPTCHA type, select v2 and check "I'm not a robot" Checkbox option respectively
-- Then enter the list of the domain you want configured e.g grandpasfaucet.com
-- Accept the recaptcha terms and conditions
-- Press the submit button to configure domains
-#### Demo 1:
-![](./src/assets/images/recaptcha.PNG?raw=true "Creating Account")
+6- Copy the contents ```/build``` folder to the root of your host with Nginx/Apache and SSL.
 
-## _Copying the secret key and sitekey values_
- After submitting, two keys will be generated and displayed, copy both the siteKey and the secretKey
+7- Proceed to setup the API at the _REACT_APP_BASEURL_ if not done already.
 
-#### Demo 2: 
-![](./src/assets/images/recaptchakeys.PNG?raw=true "Recaptcha Keys")
-
-## _Changing the Key values on both frontend and backend_
-- In the frontend code, change the value of the REACT_APP_SITE_KEY in the env file to the new one copied from the siteKey 
-- For the backend code change the value of the RECAPTCHA_SK in the env to the one copied from the secret Key. 
-- Save the changes and start the application for the recaptcha functionality reflect
+# End

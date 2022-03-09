@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-// import { loadReCaptcha } from 'react-google-recaptcha';
 import { Routes, Route, Navigate } from "react-router-dom";
 import Confirmation from "./components/Confirmation/Confirmation";
 import Home from "./components/Home/Home";
@@ -30,6 +29,7 @@ function App() {
   const hasWallet = useSelector((state) => state.auth.hasWallet);
   const isAdmin = userEmail === adminEmail ? true : false;
   const isAuthenticated = isLoggedIn && isVerified && hasAddress && hasWallet;
+
 
   useEffect(() => {
     AutoAuthenticate(dispatch);

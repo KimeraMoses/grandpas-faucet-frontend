@@ -1,10 +1,10 @@
 .grandpa__sign_up{
     background-color: #fff;
-    color: #000;
+    color: rgb(94, 71, 71);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    max-width: 300px;
+    max-width: 303px;
     align-items: center;
     padding: 10px 20px;
     text-align: center;

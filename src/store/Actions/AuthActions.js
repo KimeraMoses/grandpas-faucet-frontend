@@ -15,6 +15,11 @@ import {
 } from "../Slices/authSlice";
 import { fetchSettingsSuccess } from "../Slices/settingsSlice";
 import { fetchSiteSettings } from "./UserActions";
+import {
+  requestOtpFail,
+  requestOtpPending,
+  requestOtpSuccess,
+} from "../Slices/otpSlice";
 
 export const Login = (email) => {
   return async (dispatch) => {
@@ -90,6 +95,33 @@ export const OTPVerify = (otp, uuid) => {
     dispatch(isAuthenticated());
     localStorage.setItem("isVerified", true);
   };
+};
+
+export const RequestOtp = (uuid) => async (dispatch) => {
+  dispatch(requestOtpPending());
+  if (uuid) {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BASEURL}/accounts/resend-otp/${uuid}`,
+        {
+          method: "POST",
+          headers: new Headers({
+            "Content-type": "application/json",
+          }),
+        }
+      );
+      const data = await response.json();
+      // let message=""
+      // if(data.msg ==='OTP has been sent to mail. Check your mail and enter the otp. It will reset in 200 seconds.'){
+      //   message="A new Otp has been sent to your email, Please check your email now as it expires in 200 seconda"
+      // }
+      dispatch(requestOtpSuccess(data.msg));
+    } catch (error) {
+      dispatch(requestOtpFail(error.msg));
+    }
+  } else {
+    return;
+  }
 };
 
 export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {

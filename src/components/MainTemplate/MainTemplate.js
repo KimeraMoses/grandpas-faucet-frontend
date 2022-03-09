@@ -8,9 +8,11 @@ import WhiteBoard from "../WhiteBoard/WhiteBoard";
 import MetaMask from "../MetaMask/MetaMask";
 import TransactionStatus from "../TransactionStatus/TransactionStatus";
 import { Alert } from "@material-ui/lab";
+import { useSelector } from "react-redux";
 
 const MainTemplate = (props) => {
   const { title, description, pageType } = props;
+  const otpMessage= useSelector(state=>state.otp.message);
   const [message, setMessage] = useState("No account with your email found!");
   // const user = useSelector((state) => state.auth.user);
 
@@ -18,7 +20,7 @@ const MainTemplate = (props) => {
     <div className="grandpa__sign_up">
       {pageType === "otp" ? (
         // <Alert severity="success">Your OTP is {user && user.otp}</Alert>
-        <Alert severity="success">Please check your email for the OTP</Alert>
+        <Alert severity="success">{otpMessage}</Alert>
       ) : (
         pageType === "whiteBoard" && (
           <Alert severity="error" icon={false}>

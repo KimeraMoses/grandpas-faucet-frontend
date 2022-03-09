@@ -2,7 +2,9 @@ import { Alert } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "../../../../containers/UI/InputField/InputField";
-import { updateSiteSettings } from "../../../../store/Actions/UserActions";
+import {
+  updateSiteSettings,
+} from "../../../../store/Actions/UserActions";
 import Button from "../../../Button/Button";
 import classes from "./SiteSettings.module.css";
 
@@ -27,9 +29,7 @@ const SiteSettings = () => {
     });
   }, [settings]);
 
-  // useEffect(() => {
-  //   dispatch(fetchSiteSettings(token, apiToken));
-  // }, [token,apiToken, dispatch]);
+
   const handleInput = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
