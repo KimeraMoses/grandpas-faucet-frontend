@@ -19,17 +19,16 @@ import EnhancedTable from "./components/Dashboard/SortableTable";
 
 function App() {
   const dispatch = useDispatch();
-  const userEmail = useSelector((state) => state.auth.user.email);
-  const adminEmail = useSelector(
-    (state) => state.settings.settings.admin_email
-  );
+  const user = useSelector((state) => state.auth.user);
+  const settings = useSelector((state) => state.settings.settings);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const isVerified = useSelector((state) => state.auth.isAuth);
   const hasAddress = useSelector((state) => state.auth.hasAddress);
   const hasWallet = useSelector((state) => state.auth.hasWallet);
+  const userEmail = user && user.email;
+  const adminEmail = settings && settings.admin_email;
   const isAdmin = userEmail === adminEmail ? true : false;
   const isAuthenticated = isLoggedIn && isVerified && hasAddress && hasWallet;
-
 
   useEffect(() => {
     AutoAuthenticate(dispatch);

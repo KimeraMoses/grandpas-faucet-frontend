@@ -11,6 +11,7 @@ import {
 export const fetchSiteSettings = (AuthToken, apiToken) => {
   return async (dispatch) => {
     if (AuthToken && apiToken) {
+      console.log(AuthToken,apiToken)
       dispatch(fetchSettingsPending());
       try {
         const response = await fetch(
