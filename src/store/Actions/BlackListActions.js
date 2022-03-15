@@ -29,8 +29,10 @@ export const fetchBlackList = (AuthToken, apiToken) => async (dispatch) => {
       );
       const data = await response.json();
       dispatch(fetchBlackListSuccess(data));
+      console.log(data)
     } catch (error) {
       dispatch(fetchBlackListFail(error));
+      console.log(error)
     }
   } else {
     return;

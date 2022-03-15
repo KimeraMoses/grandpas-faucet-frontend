@@ -38,7 +38,7 @@ const BlackListedTransactions = (props) => {
                   <TableCell component="th" scope="row">
                     {row.wallet_address}
                   </TableCell>
-                  <TableCell align="right">2 Days</TableCell>
+                  <TableCell align="right">{row.expiresIn} Hours</TableCell>
                   <TableCell align="right" className={classes.action_icon_row}>
                     <IconButton
                       aria-label="delete"
