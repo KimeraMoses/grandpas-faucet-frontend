@@ -18,12 +18,12 @@ const transactionsSlice = createSlice({
     },
     fetchTransactionsSuccess: (state, { payload }) => {
       state.transactions = payload;
-      state.status = payload.status;
+      state.status = payload;
       state.isLoading = false;
     },
     fetchTransactionsFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload;
+      state.status = payload;
       state.isLoading = false;
     },
     fetchAllTransactionsPending: (state) => {
@@ -31,12 +31,12 @@ const transactionsSlice = createSlice({
     },
     fetchAllTransactionsSuccess: (state, { payload }) => {
       state.transactionsList = payload;
-      state.status = payload.status;
+      state.status = payload;
       state.isLoading = false;
     },
     fetchAllTransactionsFail: (state, { payload }) => {
-      state.message = payload.message;
-      state.status = payload.status;
+      state.message = payload;
+      state.status = payload;
       state.isLoading = false;
     },
     fetchFaucetPending: (state) => {

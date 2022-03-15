@@ -33,9 +33,9 @@ const SignIn = () => {
       });
       const data = await res.json();
       setIP(data.ip);
-      // console.log("ip", data);
+      console.log("ip", data);
     } catch (error) {
-      // console.log("Recap Error", error);
+      console.log("Recap Error", error);
       setIP("");
     }
   };
@@ -79,6 +79,7 @@ const SignIn = () => {
 
   const VerifyRecaptha = (response, remoteip) => {
     return async (dispatch) => {
+      console.log(response, remoteip)
       try {
         const res = await fetch(
           `${process.env.REACT_APP_BASEURL}/accounts/verify-reCaptcha`,

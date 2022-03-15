@@ -27,12 +27,19 @@ const UserTransactions = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTransactions(token, apiToken));
-  }, [token,apiToken,dispatch]);
+  }, [token, apiToken, dispatch]);
 
-  let sortedData = [...transactionsList];
+  let sortedData = [];
+  if (transactionsList && transactionsList.length > 0) {
+    sortedData = [...transactionsList];
+  }
   if (selected !== null) {
     sortedData.sort((a, b) => {
-      if (selected ==='name'? a.token.name < b.token.name : a[selected] < b[selected]) {
+      if (
+        selected === "name"
+          ? a.token.name < b.token.name
+          : a[selected] < b[selected]
+      ) {
         return -1;
       }
       if (a[selected] > b[selected]) {
@@ -45,12 +52,10 @@ const UserTransactions = () => {
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return (
-      sortedData && sortedData.slice(firstPageIndex, lastPageIndex)
-    );
+    return sortedData && sortedData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, sortedData]);
 
-  const FormatedData = transactionsList.map((row) => {
+  const FormatedData = transactionsList && transactionsList.map((row) => {
     let TransactionDate = new Date(row.created).toLocaleString("en-GB", {
       hour12: true,
     });
@@ -121,18 +126,20 @@ const UserTransactions = () => {
       <div className={classes.transcations_actions_wrapper}>
         <div className={classes.displayed_transactions_count}>
           <h4>
-            Displaying {currentTableData.length} of {transactionsList.length}{" "}
+            Displaying {currentTableData.length} of {transactionsList && transactionsList.length}{" "}
             items
           </h4>
         </div>
         <div className={classes.transaction_pagination_wrapper}>
-          <Pagination
-            className="pagination-bar"
-            currentPage={currentPage}
-            totalCount={transactionsList.length}
-            pageSize={PageSize}
-            onPageChange={(page) => setCurrentPage(page)}
-          />
+          {transactionsList && transactionsList.length > 0 && (
+            <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={transactionsList.length}
+              pageSize={PageSize}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          )}
         </div>
       </div>
     </div>

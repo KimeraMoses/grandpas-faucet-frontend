@@ -10,6 +10,7 @@ import Pagination from "../../Pagination/Pagination";
 import { fetchAllTokens } from "../../../../store/Actions/TokensActions";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { fetchAllTransactions } from "../../../../store/Actions/TransactionsActions";
 
 let PageSize = 5;
 const SortingArray = [
@@ -29,10 +30,13 @@ const Tokens = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAllTokens(token, apiToken));
-  }, [token,apiToken, dispatch]);
- 
+    dispatch(fetchAllTransactions(token, apiToken));
+  }, [token, apiToken, dispatch]);
 
-  let sortedData = [...EnabledTokens];
+  let sortedData = [];
+  if (EnabledTokens && EnabledTokens.length > 0) {
+    sortedData = [...EnabledTokens];
+  }
   if (selected !== null) {
     sortedData.sort((a, b) => {
       if (a[selected] < b[selected]) {
@@ -62,7 +66,7 @@ const Tokens = () => {
     return sortedData && sortedData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, sortedData]);
 
-  const FormatedData = EnabledTokens.map((row) => {
+  const FormatedData = EnabledTokens && EnabledTokens.map((row) => {
     return [
       row.wallet_address,
       row.uuid,
@@ -122,13 +126,15 @@ const Tokens = () => {
             </h4>
           </div>
           <div className={classes.transaction_pagination_wrapper}>
-            <Pagination
-              className="pagination-bar"
-              currentPage={currentPage}
-              totalCount={EnabledTokens && EnabledTokens.length}
-              pageSize={PageSize}
-              onPageChange={(page) => setCurrentPage(page)}
-            />
+            {EnabledTokens && EnabledTokens.length>0 && (
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={EnabledTokens && EnabledTokens.length}
+                pageSize={PageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            )}
           </div>
         </div>
       </div>

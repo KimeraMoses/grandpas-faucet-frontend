@@ -50,6 +50,11 @@ const TransactionsTable = (props) => {
           <Spinner />
         </div>
       )}
+      {!isLoading && currentTableData.length < 1 && (
+        <div className={classes.no__values_wrapper}>
+          <h4>No Transactions Found!!</h4>
+        </div>
+      )}
     </TableContainer>
   );
 };

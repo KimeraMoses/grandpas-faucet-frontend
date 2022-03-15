@@ -32,7 +32,7 @@ const BlackListedTransactions = (props) => {
             currentTableData.map((row) => {
               return (
                 <TableRow
-                  key={row.name}
+                  key={row.wallet_address}
                   classes={{ root: classes.table_body_row }}
                 >
                   <TableCell component="th" scope="row">
@@ -57,6 +57,11 @@ const BlackListedTransactions = (props) => {
       {isLoading && (
         <div className={classes.spinner_wrapper}>
           <Spinner />
+        </div>
+      )}
+      {!isLoading && currentTableData.length < 1 && (
+        <div className={classes.no__values_wrapper}>
+          <h4>No BlackListed Transactions Found!!</h4>
         </div>
       )}
     </TableContainer>

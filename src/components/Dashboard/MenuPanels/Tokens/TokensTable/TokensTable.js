@@ -15,7 +15,10 @@ import Spinner from "../../../../../containers/UI/Spinner/Spinner";
 const TokensTable = (props) => {
   const { handleDeleteTokens, handleEditHandler, currentTableData } = props;
   const isLoading = useSelector((state) => state.tokens.fetching);
- 
+  const TransactionsList = useSelector(
+    (state) => state.transactions.transactionsList
+  );
+
   return (
     <TableContainer>
       <Table className={classes.table} aria-label="customized table">
@@ -32,39 +35,49 @@ const TokensTable = (props) => {
         <TableBody classes={{ root: classes.table__body }}>
           {!isLoading &&
             currentTableData &&
-            currentTableData.map((row) => (
-              <TableRow key={row.id} classes={{ root: classes.table_body_row }}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.total_value}</TableCell>
-                <TableCell align="right">20</TableCell>
-                <TableCell align="right" className={classes.action_icon_row}>
-                  <IconButton
-                    aria-label="delete"
-                    size="small"
-                    className={classes.action_icon}
-                    onClick={() => handleDeleteTokens(row.uuid)}
-                  >
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="Add"
-                    size="small"
-                    className={classes.action_icon}
-                    onClick={() => handleEditHandler(row.uuid)}
-                  >
-                    <DescriptionIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))
-          }
+            currentTableData.map((row) => {
+              const TotalTokens = TransactionsList && TransactionsList.filter((trans)=>trans.token.name === row.name)
+              return (
+                <TableRow
+                  key={row.id}
+                  classes={{ root: classes.table_body_row }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.name}
+                  </TableCell>
+                  <TableCell align="right">{row.total_value}</TableCell>
+                  <TableCell align="right">{TotalTokens.length}</TableCell>
+                  <TableCell align="right" className={classes.action_icon_row}>
+                    <IconButton
+                      aria-label="delete"
+                      size="small"
+                      className={classes.action_icon}
+                      onClick={() => handleDeleteTokens(row.uuid)}
+                    >
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                    <IconButton
+                      aria-label="Add"
+                      size="small"
+                      className={classes.action_icon}
+                      onClick={() => handleEditHandler(row.uuid)}
+                    >
+                      <DescriptionIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
       {isLoading && (
         <div className={classes.spinner_wrapper}>
           <Spinner />
+        </div>
+      )}
+      {!isLoading && currentTableData.length<1 && (
+        <div className={classes.no__values_wrapper}>
+          <h4>No Tokens Found!!</h4>
         </div>
       )}
     </TableContainer>

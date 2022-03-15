@@ -28,9 +28,12 @@ const BlackList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     dispatch(fetchBlackList(token, apiToken));
-  }, [token,apiToken,dispatch]);
+  }, [token, apiToken, dispatch]);
 
-  let sortedData = [...blackList];
+  let sortedData =[]
+  if (blackList && blackList.length > 0) {
+     sortedData = [...blackList];
+  }
   if (selected !== null) {
     sortedData.sort((a, b) => {
       if (a[selected] < b[selected]) {
@@ -42,7 +45,6 @@ const BlackList = () => {
       return 0;
     });
   }
-  
 
   const handleDeleteBlackList = (token_uuid) => {
     setType(ACTIONTYPE.DELETE_BLACKLIST);
@@ -61,7 +63,7 @@ const BlackList = () => {
     return sortedData && sortedData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, sortedData]);
 
-  const FormatedData = blackList.map((row) => {
+  const FormatedData = blackList && blackList.map((row) => {
     let BlackListDate = new Date(row.created).toLocaleString("en-GB", {
       hour12: true,
     });
@@ -124,13 +126,14 @@ const BlackList = () => {
             </h4>
           </div>
           <div className={classes.transaction_pagination_wrapper}>
+            {blackList && blackList.length>0 &&
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
               totalCount={blackList && blackList.length}
               pageSize={PageSize}
               onPageChange={(page) => setCurrentPage(page)}
-            />
+            />}
           </div>
         </div>
       </div>

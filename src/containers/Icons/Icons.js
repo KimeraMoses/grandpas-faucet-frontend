@@ -20,9 +20,9 @@ export const SettingIcon = ({ isActive }) => {
             transform="translate(309 197)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-2"
@@ -31,9 +31,9 @@ export const SettingIcon = ({ isActive }) => {
             transform="translate(302 190.561)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-3"
@@ -68,9 +68,9 @@ export const SiteSettingsIcon = ({ isActive }) => {
             transform="translate(239 190.11)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-2"
@@ -79,9 +79,9 @@ export const SiteSettingsIcon = ({ isActive }) => {
             transform="translate(245 197)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-3"
@@ -111,9 +111,9 @@ export const TransactionsIcon = ({ isActive }) => {
           transform="translate(494 516.505)"
           fill="none"
           stroke={isActive ? "#4fbf87" : "#fff"}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Vector-2"
@@ -122,9 +122,9 @@ export const TransactionsIcon = ({ isActive }) => {
           transform="translate(498 524.505)"
           fill="none"
           stroke={isActive ? "#4fbf87" : "#fff"}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Vector-3"
@@ -133,9 +133,9 @@ export const TransactionsIcon = ({ isActive }) => {
           transform="translate(502.5 524.505)"
           fill="none"
           stroke={isActive ? "#4fbf87" : "#fff"}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Vector-4"
@@ -144,9 +144,9 @@ export const TransactionsIcon = ({ isActive }) => {
           transform="translate(494 511.505)"
           fill="none"
           stroke={isActive ? "#4fbf87" : "#fff"}
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Vector-5"
@@ -181,9 +181,9 @@ export const BlackListIcon = ({ isActive }) => {
             transform="translate(367.41 189.997)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-2"
@@ -192,9 +192,9 @@ export const BlackListIcon = ({ isActive }) => {
             transform="translate(373.9 197.19)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-3"
@@ -203,9 +203,9 @@ export const BlackListIcon = ({ isActive }) => {
             transform="translate(373.85 197.24)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-4"
@@ -241,9 +241,9 @@ export const TokensIcon = ({ isActive }) => {
             transform="translate(692 451.2)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-2"
@@ -252,9 +252,9 @@ export const TokensIcon = ({ isActive }) => {
             transform="translate(694 456.85)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-3"
@@ -263,9 +263,9 @@ export const TokensIcon = ({ isActive }) => {
             transform="translate(694 450.41)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-4"
@@ -274,9 +274,9 @@ export const TokensIcon = ({ isActive }) => {
             transform="translate(686 446)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-5"
@@ -285,9 +285,9 @@ export const TokensIcon = ({ isActive }) => {
             transform="translate(696.98 457)"
             fill="none"
             stroke={isActive ? "#4fbf87" : "#fff"}
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-6"
@@ -323,9 +323,9 @@ export const ArrowLeft = () => {
             transform="translate(5.268 2.72)"
             fill="none"
             stroke="#fff"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-2"
@@ -361,9 +361,9 @@ export const ArrowRight = () => {
             transform="translate(5.94 2.72)"
             fill="none"
             stroke="#fff"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
           />
           <path
             id="Vector-2"
