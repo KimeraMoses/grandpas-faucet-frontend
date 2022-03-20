@@ -10,7 +10,7 @@ const TransactionActions = (props) => {
     SortingArray,
     selected,
     setSelected,
-    actions
+    actions,
   } = props;
   return (
     <div className={classes.transactions_header_wrapper}>
@@ -19,12 +19,13 @@ const TransactionActions = (props) => {
           selected={selected}
           ArrayData={SortingArray}
           setSelected={setSelected}
-          
         />
       </div>
       <div className={classes.transactions_header_action_buttons}>
         <div className={classes.pdf_btn_wrapper}>
-          <Button variant="secondary" onClick={actions}>Export Pdf</Button>
+          <Button variant="secondary" onClick={actions}>
+            Export Pdf
+          </Button>
         </div>
         {!transactions && (
           <div className={classes.add_new_btn_wrapper}>

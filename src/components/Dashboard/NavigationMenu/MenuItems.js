@@ -33,6 +33,11 @@ export const UserMenuItems = [
         title: 'Blacklist',
     },
     {
+        icon: <BlackListIcon />,
+        url: 'blacklist-settings',
+        title: 'Blacklist Settings',
+    },
+    {
         icon: <TokensIcon />,
         url: 'tokens',
         title: 'Tokens'

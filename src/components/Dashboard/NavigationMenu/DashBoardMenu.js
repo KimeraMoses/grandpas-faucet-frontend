@@ -17,7 +17,8 @@ const DashBoardMenuItem = (props) => {
   return (
     <NavLink
       className={({ isActive }) =>
-        classes.gpa__dashboard_menu_item_wrapper + " " +
+        classes.gpa__dashboard_menu_item_wrapper +
+        " " +
         (isActive ? `${classes.gpa__selected_menu_item}` : "")
       }
       to={`/dashboard/${props.menuItemLink}`}
@@ -34,11 +35,15 @@ const DashBoardMenuItem = (props) => {
 };
 
 const DashBoardMenu = (props) => {
-  const {DashMenuTitle} = props
+  const { DashMenuTitle } = props;
 
   const UserMenuItems = [
     {
-      icon: <SiteSettingsIcon isActive={DashMenuTitle ==="site-settings"? true: false} />,
+      icon: (
+        <SiteSettingsIcon
+          isActive={DashMenuTitle === "site-settings" ? true : false}
+        />
+      ),
       url: "site-settings",
       title: "Site Settings",
     },
@@ -52,12 +57,25 @@ const DashBoardMenu = (props) => {
       ),
     },
     {
-      icon: <BlackListIcon />,
+      icon: (
+        <BlackListIcon
+          isActive={DashMenuTitle === "blacklist" ? true : false}
+        />
+      ),
       url: "blacklist",
       title: "Blacklist",
     },
     {
-      icon: <TokensIcon />,
+      url: "blacklist-settings",
+      title: "Blacklist Settings",
+      icon: (
+        <BlackListIcon
+          isActive={DashMenuTitle === "blacklist-settings" ? true : false}
+        />
+      ),
+    },
+    {
+      icon: <TokensIcon isActive={DashMenuTitle === "tokens" ? true : false} />,
       url: "tokens",
       title: "Tokens",
     },

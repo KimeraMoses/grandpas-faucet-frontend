@@ -66,16 +66,18 @@ const Tokens = () => {
     return sortedData && sortedData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, sortedData]);
 
-  const FormatedData = EnabledTokens && EnabledTokens.map((row) => {
-    return [
-      row.wallet_address,
-      row.uuid,
-      row.name,
-      row.total_value,
-      row.maximum_amount,
-      row.gas,
-    ];
-  });
+  const FormatedData =
+    EnabledTokens &&
+    EnabledTokens.map((row) => {
+      return [
+        row.wallet_address,
+        row.uuid,
+        row.name,
+        row.total_value,
+        row.maximum_amount,
+        row.gas,
+      ];
+    });
 
   const downloadPdf = () => {
     const doc = new jsPDF({
@@ -89,7 +91,9 @@ const Tokens = () => {
       head: [["Wallet Address", "UUID", "Name", "Balance", "Amount", "Gas"]],
       body: FormatedData,
     });
-    doc.save("Tokens.pdf");
+    doc.save(
+      `Tokens-${new Date().toLocaleString("en-GB", { hour12: true })}.pdf`
+    );
   };
 
   return (
@@ -126,7 +130,7 @@ const Tokens = () => {
             </h4>
           </div>
           <div className={classes.transaction_pagination_wrapper}>
-            {EnabledTokens && EnabledTokens.length>0 && (
+            {EnabledTokens && EnabledTokens.length > 0 && (
               <Pagination
                 className="pagination-bar"
                 currentPage={currentPage}

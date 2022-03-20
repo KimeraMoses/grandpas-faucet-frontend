@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { IconButton, Zoom } from "@material-ui/core";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import Grandpa_Logo from "../../assets/images/Grandpa-Logo.png";
-import { SettingIcon } from "../../containers/Icons/Icons";
+import {Outlet, useLocation } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import classes from "./Dashboard.module.css";
 import DashBoardMenu from "./NavigationMenu/DashBoardMenu";
+import AppBar from "../AppBar/AppBar";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
@@ -25,16 +24,7 @@ const Dashboard = () => {
   }
   return (
     <div className={classes.dashboard_page_wrapper}>
-      <div className={classes.grandpa__header}>
-        <Link to="/">
-          <img src={Grandpa_Logo} alt="GrandPa" />
-        </Link>
-        <Link to="/dashboard/site-settings">
-          <div className={classes.dashboard__setting_icon_wrapper}>
-            <SettingIcon />
-          </div>
-        </Link>
-      </div>
+      <AppBar />
       <div className={classes.grandpa__dashboard_wrapper}>
         <div className={classes.menu__wrapper}>
           <DashBoardMenu DashMenuTitle={DashMenuTitle} />

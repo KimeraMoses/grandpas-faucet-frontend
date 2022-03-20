@@ -62,18 +62,10 @@ const MetaMask = () => {
     setLoading(true);
     new WalletConnectProvider({
       host: config.MATIC_RPC,
-      // callbacks: {
-      //   onConnect: console.log("matic connected"),
-      //   onDisconnect: console.log("matic disconnected!"),
-      // },
     });
 
     new WalletConnectProvider({
       host: config.ETHEREUM_RPC,
-      // callbacks: {
-      //   onConnect: console.log("mainchain connected"),
-      //   onDisconnect: console.log("mainchain disconnected"),
-      // },
     });
 
     const web3 = window.web3;
@@ -91,7 +83,7 @@ const MetaMask = () => {
     }
 
     if (accounts) {
-      localStorage.setItem("Address", accounts[0]);
+      localStorage.setItem("Grand__Address", accounts[0]);
     }
   };
   const initConnection = async () => {

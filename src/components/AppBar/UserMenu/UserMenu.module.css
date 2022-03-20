@@ -1,0 +1,24 @@
+.gpa__userAccount_setting_wrapper::after {
+  content: "";
+  border-left: 0.8rem solid transparent;
+  border-right: 0.8rem solid transparent;
+  border-bottom: 0.8rem solid #fff;
+  position: absolute;
+  top: -13px;
+  right: 3px;
+  transform: translateX(-50%);
+  transition: all 0ms;
+}
+.grandpa__logout_btn{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.grandpa__logout_btn:hover{
+  color: var(--primary__color);
+}
+.grandpa__logout_btn svg{
+  margin-right: 3px;
+  color: var(--primary__color) !important;
+}

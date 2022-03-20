@@ -9,37 +9,39 @@ import ArrowDropDownIcon from "@material-ui/icons/KeyboardArrowDown";
 //===COMPONENT IMPORTS===
 import classes from "./CustomDropdown.module.css";
 
-
 const CustomDropdown = (props) => {
-  const { selected, setSelected, ArrayData } = props;
+  const { selected, setSelected, ArrayData, isTokens,selectedName,setSelectedName } = props;
   const [isActive, setIsActive] = useState(false);
-  const selectedItemHandler = (name) => {
-    setSelected(name);
+  // const [selectedName, setSelectedName] = useState(
+  //   isTokens ? "Select Token" : "Select Wallet Address"
+  // );
+  console.log(selectedName, selected)
+  const selectedItemHandler = (option) => {
+    setSelected(isTokens ? option._id : option.address);
+    setSelectedName(isTokens ? option.name : option.address);
     setIsActive(false);
   };
-
+  console.log(ArrayData);
   return (
     <div
       className={classes.gpa__dropdown}
       onClick={(e) => setIsActive(!isActive)}
     >
       <div className={classes.gpa__dropdown_button}>
-        <div className={classes.gpa__dropdown_button_text}>
-          {selected}
-        </div>
+        <div className={classes.gpa__dropdown_button_text}>{selectedName}</div>
         <div>{isActive ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}</div>
       </div>
       {isActive && (
         <div className={classes.gpa__dropdown_content}>
           {ArrayData &&
-            ArrayData.map((option, index) => {
+            ArrayData.map((option) => {
               return (
                 <div
-                  key={index}
+                  key={option.name}
                   className={classes.gpa__dropdown_item}
-                  onClick={(e) => selectedItemHandler(option.address)}
+                  onClick={(e) => selectedItemHandler(option)}
                 >
-                  {option.address}
+                  {isTokens ? option.name : option.address}
                 </div>
               );
             })}

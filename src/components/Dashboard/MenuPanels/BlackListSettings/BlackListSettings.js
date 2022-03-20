@@ -1,33 +1,39 @@
 import React, { useEffect, useState, useMemo } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import classes from "./BlackList.module.css";
-import BlackListedTransactions from "./BlackListedTransactions/BlackListedTransactions";
+import classes from "../BlackList/BlackList.module.css";
 import TransactionActions from "../Transactions/TransactionActions";
 import ModalComponent, {
   ACTIONTYPE,
 } from "../../../../containers/UI/Modal/Modal";
 import Pagination from "../../Pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBlackList } from "../../../../store/Actions/BlackListActions";
+import {
+  fetchBlackList,
+  fetchBlackListSettings,
+} from "../../../../store/Actions/BlackListActions";
+import BlackListTable from "./BlackListTable/BlackListTable";
 let PageSize = 5;
 
 const SortingArray = [
-  { name: "wallet Address", value: "wallet_address" },
-  { name: "Time to next transaction", value: "time" },
+  { name: "Token Name", value: "name" },
+  { name: "Max Amount", value: "max_amount" },
+  { name: "Max Amount Duration", value: "max_amount_duration" },
 ];
 
-const BlackList = () => {
+const BlackListSettings = () => {
   const { token, apiToken } = useSelector((state) => state.auth);
-  const blackList = useSelector((state) => state.blackList.blackList);
+  const blackList = useSelector((state) => state.blackList.blackListSettings);
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState("Wallet Address");
-  const [selectedToken, setSelectedToken] = useState("Select Wallet Address");
+  const [selected, setSelected] = useState("Token Name");
+  const [selectedToken, setSelectedToken] = useState("Select Token");
+  const [selectedName, setSelectedName] = useState("Select Token");
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     dispatch(fetchBlackList(token, apiToken));
+    dispatch(fetchBlackListSettings(token, apiToken));
   }, [token, apiToken, dispatch]);
 
   let sortedData = [];
@@ -36,7 +42,11 @@ const BlackList = () => {
   }
   if (selected !== null) {
     sortedData.sort((a, b) => {
-      if (a[selected] < b[selected]) {
+      if (
+        selected === "name"
+          ? a.token.name < b.token.name
+          : a[selected] < b[selected]
+      ) {
         return -1;
       }
       if (a[selected] > b[selected]) {
@@ -46,14 +56,20 @@ const BlackList = () => {
     });
   }
 
-  const handleDeleteBlackList = (token_uuid) => {
-    setType(ACTIONTYPE.DELETE_BLACKLIST);
+  const handleDeleteBlackList = (ID) => {
+    setType(ACTIONTYPE.DELETE_BLACKLIST_SETTING);
     setOpen(true);
-    setSelectedToken(token_uuid);
+    setSelectedToken(ID);
+  };
+
+  const handleEditHandler = (ID) => {
+    setType(ACTIONTYPE.EDIT_BLACKLIST_SETTING);
+    setOpen(true);
+    setSelectedToken(ID);
   };
 
   const AddNewBlackListHandler = () => {
-    setType(ACTIONTYPE.ADD_TO_BLACKLIST);
+    setType(ACTIONTYPE.ADD_TO_BLACKLIST_SETTINGS);
     setOpen(true);
   };
 
@@ -70,10 +86,10 @@ const BlackList = () => {
         hour12: true,
       });
       return [
-        row.wallet_address,
+        row.token.name,
         row.uuid,
-        row.expiresIn,
-        row.ip_address,
+        row.max_amount,
+        row.max_amount_duration,
         BlackListDate,
       ];
     });
@@ -82,24 +98,26 @@ const BlackList = () => {
     const doc = new jsPDF({
       orientation: "landscape",
     });
-    doc.text("BlackList Details", 10, 10);
+    doc.text("BlackList Settings Details", 10, 10);
     doc.autoTable({
       theme: "grid",
       columnStyles: { valign: "center" },
       headStyles: { minCellWidth: 20 },
       head: [
         [
-          "Wallet Address",
+          "Token Name",
           "UUID",
-          "Time To Next Transaction(Hour)",
-          "ip_address",
+          "Max Amount",
+          "Max Amount Duration",
           "Date BlackListed",
         ],
       ],
       body: FormatedData,
     });
     doc.save(
-      `BlackList-${new Date().toLocaleString("en-GB", { hour12: true })}.pdf`
+      `BlackListSettings-${new Date().toLocaleString("en-GB", {
+        hour12: true,
+      })}.pdf`
     );
   };
 
@@ -111,6 +129,8 @@ const BlackList = () => {
         type={type}
         selected={selectedToken}
         setSelected={setSelectedToken}
+        selectedName={selectedName}
+        setSelectedName={setSelectedName}
       />
       <div className={classes.black_list_transactions_wrapper}>
         <div className={classes.black_list_transactions_section}>
@@ -122,8 +142,9 @@ const BlackList = () => {
             actions={downloadPdf}
           />
           <div className={classes.transactions_table_wrapper}>
-            <BlackListedTransactions
+            <BlackListTable
               handleDeleteBlackList={handleDeleteBlackList}
+              handleEditHandler={handleEditHandler}
               currentTableData={currentTableData}
             />
           </div>
@@ -152,4 +173,4 @@ const BlackList = () => {
   );
 };
 
-export default BlackList;
+export default BlackListSettings;

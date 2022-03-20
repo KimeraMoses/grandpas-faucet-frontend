@@ -52,13 +52,8 @@ export const Login = (email) => {
         token: res.token,
       })
     );
-    const userInfo = {
-      user: res.data,
-      apiToken: res.apiToken,
-      token: res.token,
-    };
     dispatch(fetchSiteSettings(res.token, res.apiToken));
-    SaveTokenInLocalStorage(dispatch, userInfo);
+    SaveTokenInLocalStorage(dispatch, res);
   };
 };
 
@@ -93,7 +88,7 @@ export const OTPVerify = (otp, uuid) => {
     }
     dispatch(verificationSuccess(Errormessage));
     dispatch(isAuthenticated());
-    localStorage.setItem("isVerified", true);
+    localStorage.setItem("Grand__isVerified", true);
   };
 };
 
@@ -111,10 +106,6 @@ export const RequestOtp = (uuid) => async (dispatch) => {
         }
       );
       const data = await response.json();
-      // let message=""
-      // if(data.msg ==='OTP has been sent to mail. Check your mail and enter the otp. It will reset in 200 seconds.'){
-      //   message="A new Otp has been sent to your email, Please check your email now as it expires in 200 seconda"
-      // }
       dispatch(requestOtpSuccess(data.msg));
     } catch (error) {
       dispatch(requestOtpFail(error.msg));
@@ -151,7 +142,7 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
       }
       const res = await response.json();
       dispatch(createWalletSuccess(res.data));
-      localStorage.setItem("Wallet", JSON.stringify(res.data));
+      localStorage.setItem("Grand__Wallet", JSON.stringify(res.data));
     } else {
       return;
     }
@@ -159,28 +150,31 @@ export const CreateWallet = (address, account_uuid, apiToken, AuthToken) => {
 };
 
 export const SaveTokenInLocalStorage = (dispatch, userDetails) => {
-  // logOutTimer(dispatch, userDetails.expiresIn);
+  logOutTimer(dispatch, userDetails.expiresIn);
+  
   let AuthTokenDetails = {
     token: userDetails.token,
     apiToken: userDetails.apiToken,
+    expiresIn: userDetails.expiresIn,
+    expirationTime: userDetails.expirationTime,
   };
-  localStorage.setItem("AuthToken", JSON.stringify(AuthTokenDetails));
-  localStorage.setItem("CurrentUser", JSON.stringify(userDetails.user));
+  localStorage.setItem("Grand__AuthToken", JSON.stringify(AuthTokenDetails));
+  localStorage.setItem("Grand__CurrentUser", JSON.stringify(userDetails.data));
 };
 
-// export const logOutTimer = (dispatch, timer) => {
-//   setTimeout(() => {
-//     dispatch(logout());
-//   }, timer);
-// };
+export const logOutTimer = (dispatch, timer) => {
+  setTimeout(() => {
+    dispatch(logout());
+  }, timer);
+};
 
 export const AutoAuthenticate = (dispatch) => {
-  const AuthToken = localStorage.getItem("AuthToken");
-  const CurrentUser = localStorage.getItem("CurrentUser");
-  const siteSettings = localStorage.getItem("settings");
-  const isAuth = localStorage.getItem("isVerified");
-  const Address = localStorage.getItem("Address");
-  const Wallet = localStorage.getItem("Wallet");
+  const AuthToken = localStorage.getItem("Grand__AuthToken");
+  const CurrentUser = localStorage.getItem("Grand__CurrentUser");
+  const siteSettings = localStorage.getItem("Grand__Settings");
+  const isAuth = localStorage.getItem("Grand__isVerified");
+  const Address = localStorage.getItem("Grand__Address");
+  const Wallet = localStorage.getItem("Grand__Wallet");
   let UserToken = "";
   if (!AuthToken) {
     dispatch(logout());
@@ -195,24 +189,23 @@ export const AutoAuthenticate = (dispatch) => {
   if (Wallet) {
     dispatch(createWalletSuccess(JSON.parse(Wallet)));
   }
-  if(siteSettings){
-    dispatch(fetchSettingsSuccess(JSON.parse(siteSettings)))
+  if (siteSettings) {
+    dispatch(fetchSettingsSuccess(JSON.parse(siteSettings)));
+  }
+  UserToken = JSON.parse(AuthToken);
+  let expireDate = new Date(UserToken.expirationTime);
+  let todaysDate = new Date();
+  if (todaysDate > expireDate) {
+    return dispatch(logout());
   }
 
-  UserToken = JSON.parse(AuthToken);
-  // let expireDate = new Date(UserToken.expirationtime);
-  // let todaysDate = new Date();
-  // if (todaysDate > expireDate) {
-  //   return dispatch(logout());
-  // }
   let data = {
     token: UserToken.token,
     apiToken: UserToken.apiToken,
     user: JSON.parse(CurrentUser),
   };
-  // validateToken(UserToken)
   dispatch(autoAuthenticationSuccess(data));
 
-  // const timer = expireDate.getTime() - todaysDate.getTime();
-  // logOutTimer(dispatch, timer);
+  const timer = expireDate.getTime() - todaysDate.getTime();
+  logOutTimer(dispatch, timer);
 };

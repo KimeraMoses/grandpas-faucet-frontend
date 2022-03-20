@@ -11,7 +11,6 @@ import {
 export const fetchSiteSettings = (AuthToken, apiToken) => {
   return async (dispatch) => {
     if (AuthToken && apiToken) {
-      console.log(AuthToken,apiToken)
       dispatch(fetchSettingsPending());
       try {
         const response = await fetch(
@@ -29,7 +28,7 @@ export const fetchSiteSettings = (AuthToken, apiToken) => {
         );
         const SiteSettings = await response.json();
         dispatch(fetchSettingsSuccess(SiteSettings));
-        localStorage.setItem("settings", JSON.stringify(SiteSettings));
+        localStorage.setItem("Grand__Settings", JSON.stringify(SiteSettings));
       } catch (error) {
         dispatch(fetchSettingsFail(error));
       }

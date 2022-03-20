@@ -55,21 +55,23 @@ const UserTransactions = () => {
     return sortedData && sortedData.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, sortedData]);
 
-  const FormatedData = transactionsList && transactionsList.map((row) => {
-    let TransactionDate = new Date(row.created).toLocaleString("en-GB", {
-      hour12: true,
+  const FormatedData =
+    transactionsList &&
+    transactionsList.map((row) => {
+      let TransactionDate = new Date(row.created).toLocaleString("en-GB", {
+        hour12: true,
+      });
+      return [
+        row.wallet,
+        row.uuid,
+        row.hash,
+        row.amount,
+        row.token.name,
+        row.account.email,
+        TransactionDate,
+        row.status,
+      ];
     });
-    return [
-      row.wallet,
-      row.uuid,
-      row.hash,
-      row.amount,
-      row.token.name,
-      row.account.email,
-      TransactionDate,
-      row.status,
-    ];
-  });
 
   // const downloadExcel = () => {
   //   const workSheet = XLSX.utils.json_to_sheet(FormatedData);
@@ -106,7 +108,9 @@ const UserTransactions = () => {
       ],
       body: FormatedData,
     });
-    doc.save("Transactions.pdf");
+    doc.save(
+      `Transactions-${new Date().toLocaleString("en-GB", { hour12: true })}.pdf`
+    );
   };
 
   return (
@@ -126,8 +130,8 @@ const UserTransactions = () => {
       <div className={classes.transcations_actions_wrapper}>
         <div className={classes.displayed_transactions_count}>
           <h4>
-            Displaying {currentTableData.length} of {transactionsList && transactionsList.length}{" "}
-            items
+            Displaying {currentTableData.length} of{" "}
+            {transactionsList && transactionsList.length} items
           </h4>
         </div>
         <div className={classes.transaction_pagination_wrapper}>

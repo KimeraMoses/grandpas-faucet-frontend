@@ -15,7 +15,7 @@ import SiteSettings from "./components/Dashboard/MenuPanels/SiteSettings/SiteSet
 import UserTransactions from "./components/Dashboard/MenuPanels/Transactions/UserTransactions";
 import BlackList from "./components/Dashboard/MenuPanels/BlackList/BlackList";
 import Tokens from "./components/Dashboard/MenuPanels/Tokens/Tokens";
-import EnhancedTable from "./components/Dashboard/SortableTable";
+import BlackListSettings from "./components/Dashboard/MenuPanels/BlackListSettings/BlackListSettings";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +37,6 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/test" element={<EnhancedTable />} />
         <Route
           path="*"
           element={
@@ -148,13 +147,17 @@ function App() {
             }
           />
         </Route>
+
         <Route
           path="/dashboard/*"
-          element={isAdmin ? <Dashboard /> : <Navigate to="/sign-in" />}
+          element={
+            isLoggedIn && isAdmin ? <Dashboard /> : <Navigate to="/sign-in" />
+          }
         >
           <Route path="site-settings" element={<SiteSettings />} />
           <Route path="transactions" element={<UserTransactions />} />
           <Route path="blacklist" element={<BlackList />} />
+          <Route path="blacklist-settings" element={<BlackListSettings />} />
           <Route path="tokens" element={<Tokens />} />
         </Route>
       </Routes>

@@ -56,23 +56,40 @@ const InputField = (props) => {
       />
     );
   });
-  const { type, value, name, disabled, placeholder, onChange, toggle,checked } = props;
+
+  const {
+    type,
+    value,
+    name,
+    disabled,
+    placeholder,
+    onChange,
+    toggle,
+    checked,
+    fullWidth,
+    step,
+    min,
+  } = props;
   return (
     <div
       className={`${classes.input_field_wrapper} ${
         disabled ? classes.input_field__disabled : ""
-      }`}
+      } ${fullWidth ? classes.fullWidth : ""}`}
     >
       <input
         className={classes.input_field}
         type={type}
-        value={toggle? "": value}
+        value={toggle ? "" : value}
         onChange={onChange}
         name={name}
         placeholder={placeholder}
         disabled={disabled || toggle}
+        step={step}
+        min={min}
       />
-      {toggle && <CustomSwitch checked={checked} onChange={onChange} name={name} />}
+      {toggle && (
+        <CustomSwitch checked={checked} onChange={onChange} name={name} />
+      )}
     </div>
   );
 };

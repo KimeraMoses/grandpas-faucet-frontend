@@ -1,17 +1,13 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
-import Grandpa_Logo from "../../assets/images/Grandpa-Logo.png";
+import { Outlet } from "react-router-dom";
+import AppBar from "../AppBar/AppBar";
 import Faq from "../FAQs/Faq";
 import "./Home.css";
 
 const Home = () => {
   return (
     <div className="grandpa__wrapper">
-      <div className="grandpa__header">
-        <Link to="/">
-          <img src={Grandpa_Logo} alt="GrandPa" />
-        </Link>
-      </div>
+      <AppBar />
       <div className="grandpa__content_wrapper">
         <div className="grandpa__main_content_wrapper">
           <Outlet />

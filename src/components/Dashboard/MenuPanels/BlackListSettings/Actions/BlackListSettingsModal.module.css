@@ -1,0 +1,41 @@
+.new_black_list_wrapper {
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+}
+.new_black_list_header h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+.new_black_list_header p {
+  color: var(--tartiary__color);
+  font-weight: 400;
+  font-size: 16px;
+}
+.black_list_action_btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.cancel_btn_wrapper,
+.add_new_blacklist_btn_wrapper {
+  width: 50%;
+}
+.cancel_btn_wrapper {
+  margin-right: 10px;
+}
+
+.new_input_field_wrapper__half {
+  display: flex;
+  width: 100%;
+}
+.field_wrapper_right,
+.field_wrapper_left {
+  width: 50%;
+}
+.field_wrapper_right {
+  margin-left: 5px;
+}

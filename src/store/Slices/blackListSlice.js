@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   blackList: [],
+  blackListSettings: [],
   isLoading: false,
   fetching: false,
   message: "",
@@ -20,6 +21,19 @@ const blackListSlice = createSlice({
       state.fetching = false;
     },
     fetchBlackListFail: (state, { payload }) => {
+      state.message = payload;
+      state.status = payload;
+      state.fetching = false;
+    },
+    fetchBlackListSettingsPending: (state) => {
+      state.fetching = true;
+    },
+    fetchBlackListSettingsSuccess: (state, { payload }) => {
+      state.blackListSettings = payload.data;
+      state.status = payload;
+      state.fetching = false;
+    },
+    fetchBlackListSettingsFail: (state, { payload }) => {
       state.message = payload;
       state.status = payload;
       state.fetching = false;
@@ -46,6 +60,17 @@ const blackListSlice = createSlice({
       state.isLoading = false;
       state.message = payload;
     },
+    editBlackListSettingPending: (state) => {
+      state.isLoading = true;
+    },
+    editBlackListSettingSuccess: (state, { payload }) => {
+      state.isLoading = false;
+      state.message = payload;
+    },
+    editBlackListSettingFail: (state, { payload }) => {
+      state.isLoading = false;
+      state.message = payload;
+    },
   },
 });
 
@@ -61,5 +86,11 @@ export const {
   deleteBlackListPending,
   deleteBlackListSuccess,
   deleteBlackListFail,
+  fetchBlackListSettingsPending,
+  fetchBlackListSettingsSuccess,
+  fetchBlackListSettingsFail,
+  editBlackListSettingPending,
+  editBlackListSettingSuccess,
+  editBlackListSettingFail,
 } = actions;
 export default reducer;

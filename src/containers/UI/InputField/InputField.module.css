@@ -27,3 +27,7 @@
 .input_field_wrapper.input_field__disabled {
   background-color: var(--background__color);
 }
+.input_field_wrapper.fullWidth {
+  width: 100%;
+  max-width: 100%;
+}

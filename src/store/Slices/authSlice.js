@@ -77,10 +77,12 @@ export const authSlice = createSlice({
     logout(state) {
       state.user = {};
       state.token = null;
+      state.apiToken = null;
       state.isLoggedIn = false;
-      localStorage.removeItem("isVerified")
-      localStorage.removeItem("AuthToken");
-      localStorage.removeItem("CurrentUser");
+      localStorage.removeItem("Grand__isVerified")
+      localStorage.removeItem("Grand__AuthToken");
+      localStorage.removeItem("Grand__CurrentUser");
+      localStorage.removeItem("Grand__Settings");
     },
   },
 });

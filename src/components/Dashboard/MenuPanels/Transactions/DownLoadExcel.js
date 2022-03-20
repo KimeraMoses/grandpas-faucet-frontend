@@ -4,7 +4,6 @@ const DownloadExcel = ({data}) => {
     //   delete row.tableData;
     //   return row;
     // });
-    console.log("Table data",data)
     const workSheet = XLSX.utils.json_to_sheet(data);
     const workBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workBook, workSheet, "students");
