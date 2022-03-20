@@ -23,6 +23,7 @@ const BlackList = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("Wallet Address");
   const [selectedToken, setSelectedToken] = useState("Select Wallet Address");
+  const [selectedName, setSelectedName] = useState("Select Wallet Address");
   const [open, setOpen] = useState(false);
   const [type, setType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -111,6 +112,8 @@ const BlackList = () => {
         type={type}
         selected={selectedToken}
         setSelected={setSelectedToken}
+        selectedName={selectedName}
+        setSelectedName={setSelectedName}
       />
       <div className={classes.black_list_transactions_wrapper}>
         <div className={classes.black_list_transactions_section}>

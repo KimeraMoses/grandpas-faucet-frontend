@@ -12,16 +12,11 @@ import classes from "./CustomDropdown.module.css";
 const CustomDropdown = (props) => {
   const { selected, setSelected, ArrayData, isTokens,selectedName,setSelectedName } = props;
   const [isActive, setIsActive] = useState(false);
-  // const [selectedName, setSelectedName] = useState(
-  //   isTokens ? "Select Token" : "Select Wallet Address"
-  // );
-  console.log(selectedName, selected)
   const selectedItemHandler = (option) => {
     setSelected(isTokens ? option._id : option.address);
     setSelectedName(isTokens ? option.name : option.address);
     setIsActive(false);
   };
-  console.log(ArrayData);
   return (
     <div
       className={classes.gpa__dropdown}

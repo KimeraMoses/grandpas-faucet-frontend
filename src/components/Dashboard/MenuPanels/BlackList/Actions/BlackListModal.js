@@ -12,7 +12,7 @@ import classes from "./BlackListModal.module.css";
 
 const BlackListModal = (props) => {
   const { token, apiToken } = useSelector((state) => state.auth);
-  const { title, description, action, setOpen,selected,setSelected } = props;
+  const { title, description, action, setOpen,selected,setSelected,selectedName,setSelectedName } = props;
   const WalletData = useSelector((state) => state.wallet.Wallet);
   const isLoading = useSelector((state) => state.blackList.isLoading);
   const dispatch = useDispatch();
@@ -64,6 +64,8 @@ const BlackListModal = (props) => {
               setSelected={setSelected}
               isSelect={true}
               ArrayData={WalletData}
+              selectedName={selectedName}
+              setSelectedName={setSelectedName}
             />
           </div>
         )}

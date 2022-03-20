@@ -34,6 +34,8 @@ const ModalComponent = (props) => {
             setOpen={setOpen}
             setSelected={setSelected}
             selected={selected}
+            selectedName={selectedName}
+            setSelectedName={setSelectedName}
           />
         ) : type === ACTIONTYPE.DELETE_BLACKLIST ? (
           <BlackListModal
