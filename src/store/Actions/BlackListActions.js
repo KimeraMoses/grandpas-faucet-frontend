@@ -33,6 +33,7 @@ export const fetchBlackList = (AuthToken, apiToken) => async (dispatch) => {
           }),
         }
       );
+
       const data = await response.json();
       dispatch(fetchBlackListSuccess(data));
     } catch (error) {
@@ -130,6 +131,7 @@ export const fetchBlackListSettings =
             }),
           }
         );
+        console.log(response);
         const data = await response.json();
         dispatch(fetchBlackListSettingsSuccess(data));
       } catch (error) {

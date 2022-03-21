@@ -71,10 +71,10 @@ const BlackList = () => {
         hour12: true,
       });
       return [
-        row.wallet_address,
+        row.account.email,
+        row.token.name,
         row.uuid,
         row.expiresIn,
-        row.ip_address,
         BlackListDate,
       ];
     });
@@ -90,10 +90,10 @@ const BlackList = () => {
       headStyles: { minCellWidth: 20 },
       head: [
         [
-          "Wallet Address",
+          "Email",
+          "Token",
           "UUID",
           "Time To Next Transaction(Hour)",
-          "ip_address",
           "Date BlackListed",
         ],
       ],

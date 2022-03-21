@@ -19,7 +19,8 @@ const BlackListedTransactions = (props) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead classes={{ root: classes.table_head }}>
           <TableRow classes={{ root: classes.table__head_row }}>
-            <TableCell>Wallet Address</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Token</TableCell>
             <TableCell align="right">Time To Next Transaction</TableCell>
             <TableCell align="right" className={classes.action_icon_row}>
               Options
@@ -36,7 +37,10 @@ const BlackListedTransactions = (props) => {
                   classes={{ root: classes.table_body_row }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.wallet_address}
+                    {row.account.email}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {row.token.name}
                   </TableCell>
                   <TableCell align="right">{row.expiresIn} Hours</TableCell>
                   <TableCell align="right" className={classes.action_icon_row}>
