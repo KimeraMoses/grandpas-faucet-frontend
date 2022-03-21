@@ -36,7 +36,6 @@ const BlackListSettings = () => {
     dispatch(fetchBlackListSettings(token, apiToken));
     dispatch(fetchAllTokens(token, apiToken));
   }, [token, apiToken, dispatch]);
-  console.log(blackList)
   const filteredTokens = TokensData.filter((token) => {
     let isAdded = false;
     for (let i = 0; i < blackList.length; i++) {

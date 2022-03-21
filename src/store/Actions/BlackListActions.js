@@ -131,7 +131,6 @@ export const fetchBlackListSettings =
             }),
           }
         );
-        console.log(response);
         const data = await response.json();
         dispatch(fetchBlackListSettingsSuccess(data));
       } catch (error) {
