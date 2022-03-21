@@ -21,9 +21,14 @@
 .grandpa__user_account_settings {
   position: relative;
 }
-/* .grandpa__dropmenu_wrapper{
-    color: #000000;
-} */
+.grandpa__dropmenu_wrapper {
+  color: #ffffff;
+  background-color: #262626;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
+    rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+    rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  border-radius: 4px;
+}
 .gpa__userAccount_popper_up_wrapper {
   z-index: 1111;
   top: 8px !important;

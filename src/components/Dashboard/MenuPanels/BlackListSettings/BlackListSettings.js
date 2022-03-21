@@ -9,10 +9,10 @@ import ModalComponent, {
 import Pagination from "../../Pagination/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchBlackList,
   fetchBlackListSettings,
 } from "../../../../store/Actions/BlackListActions";
 import BlackListTable from "./BlackListTable/BlackListTable";
+import { fetchAllTokens } from "../../../../store/Actions/TokensActions";
 let PageSize = 5;
 
 const SortingArray = [
@@ -24,6 +24,7 @@ const SortingArray = [
 const BlackListSettings = () => {
   const { token, apiToken } = useSelector((state) => state.auth);
   const blackList = useSelector((state) => state.blackList.blackListSettings);
+  const TokensData = useSelector((state) => state.tokens.tokens);
   const dispatch = useDispatch();
   const [selected, setSelected] = useState("Token Name");
   const [selectedToken, setSelectedToken] = useState("Select Token");
@@ -32,9 +33,19 @@ const BlackListSettings = () => {
   const [type, setType] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    dispatch(fetchBlackList(token, apiToken));
     dispatch(fetchBlackListSettings(token, apiToken));
+    dispatch(fetchAllTokens(token, apiToken));
   }, [token, apiToken, dispatch]);
+  
+  const filteredTokens = TokensData.filter((token) => {
+    let isAdded = false;
+    for (let i = 0; i < blackList.length; i++) {
+      if (token._id === blackList[i].token._id) {
+        isAdded = true;
+      }
+    }
+    return !isAdded;
+  });
 
   let sortedData = [];
   if (blackList && blackList.length > 0) {
@@ -131,6 +142,7 @@ const BlackListSettings = () => {
         setSelected={setSelectedToken}
         selectedName={selectedName}
         setSelectedName={setSelectedName}
+        ArrayData={filteredTokens}
       />
       <div className={classes.black_list_transactions_wrapper}>
         <div className={classes.black_list_transactions_section}>
@@ -140,6 +152,7 @@ const BlackListSettings = () => {
             SortingArray={SortingArray}
             setSelected={setSelected}
             actions={downloadPdf}
+            ArrayData={filteredTokens}
           />
           <div className={classes.transactions_table_wrapper}>
             <BlackListTable

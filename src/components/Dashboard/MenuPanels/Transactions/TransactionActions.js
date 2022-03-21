@@ -11,6 +11,7 @@ const TransactionActions = (props) => {
     selected,
     setSelected,
     actions,
+    ArrayData,
   } = props;
   return (
     <div className={classes.transactions_header_wrapper}>
@@ -29,7 +30,11 @@ const TransactionActions = (props) => {
         </div>
         {!transactions && (
           <div className={classes.add_new_btn_wrapper}>
-            <Button variant="primary" onClick={AddNewBlackListHandler}>
+            <Button
+              variant="primary"
+              onClick={AddNewBlackListHandler}
+              disabled={ArrayData && ArrayData.length < 1}
+            >
               Add new
             </Button>
           </div>

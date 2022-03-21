@@ -3,21 +3,20 @@
   align-items: center;
   text-decoration: none;
   padding: 10px;
-  border-bottom: 1px solid #eee;
-  color: #000000;
+  border-bottom: 1px solid #595959;
+  color: #fff;
 }
-.gpa__link_item:hover{
+.gpa__link_item:hover {
   color: var(--primary__color) !important;
-  /* background: rgb(79,191,135);
-  background: linear-gradient(90deg, rgba(79,191,135,0.25) 38%, rgba(38,38,38,1) 100%); */
+  background: rgb(79, 191, 135);
+  background: linear-gradient(
+    90deg,
+    rgba(79, 191, 135, 0.25) 38%,
+    rgba(38, 38, 38, 1) 100%
+  );
 }
-/* .gpa__link_item:hover svg{
-  col
-} */
 
 .gpa__link_item svg {
   margin-right: 3px;
   color: var(--primary__color) !important;
-  /* background: rgb(79,191,135);
-  background: linear-gradient(90deg, rgba(79,191,135,0.25) 38%, rgba(38,38,38,1) 100%); */
 }

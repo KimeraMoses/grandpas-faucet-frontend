@@ -56,12 +56,11 @@ const AppBar = () => {
               >
                 {({ TransitionProps }) => (
                   <Fade {...TransitionProps} timeout={350}>
-                    <Paper
-                      elevation={3}
+                    <div
                       className={classes.grandpa__dropmenu_wrapper}
                     >
                       <UserMenu />
-                    </Paper>
+                    </div>
                   </Fade>
                 )}
               </Popper>

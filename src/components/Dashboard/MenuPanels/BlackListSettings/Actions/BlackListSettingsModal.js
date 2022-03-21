@@ -8,7 +8,6 @@ import {
   DeleteBlackListSetting,
   EditBlackListSetting,
 } from "../../../../../store/Actions/BlackListActions";
-import { fetchAllTokens } from "../../../../../store/Actions/TokensActions";
 import Button from "../../../../Button/Button";
 import classes from "./BlackListSettingsModal.module.css";
 
@@ -24,11 +23,12 @@ const BlackListSettingsModal = (props) => {
     setSelected,
     selectedName,
     setSelectedName,
+    ArrayData
   } = props;
-  const TokensData = useSelector((state) => state.tokens.tokens);
   const BlackListedData = useSelector(
     (state) => state.blackList.blackListSettings
   );
+
   const isLoading = useSelector((state) => state.blackList.isLoading);
   const dispatch = useDispatch();
   const [values, setValues] = useState({
@@ -47,7 +47,7 @@ const BlackListSettingsModal = (props) => {
         max_amount_duration: selectedToken.max_amount_duration,
       });
     }
-  }, [selected, selectedToken,action,setSelectedName]);
+  }, [selected, selectedToken, action, setSelectedName]);
 
   const cancelBtnHandler = () => {
     setValues({
@@ -63,10 +63,6 @@ const BlackListSettingsModal = (props) => {
     setValues({ ...values, [name]: value });
     setError("");
   };
-
-  useEffect(() => {
-    dispatch(fetchAllTokens(token, apiToken));
-  }, [token, apiToken, dispatch]);
 
   const deleteBlackList = async (e) => {
     e.preventDefault();
@@ -128,11 +124,7 @@ const BlackListSettingsModal = (props) => {
     <div className={classes.new_black_list_wrapper}>
       {error && (
         <div style={{ textAlign: "left", marginBottom: 5 }}>
-          <Alert
-            severity="error"
-          >
-            {error}
-          </Alert>
+          <Alert severity="error">{error}</Alert>
         </div>
       )}
       <div className={classes.new_black_list_header}>
@@ -154,9 +146,10 @@ const BlackListSettingsModal = (props) => {
               <CustomDropdown
                 isTokens={true}
                 selected={selected}
+                disabled={action === "edit" ? true : false}
                 setSelected={setSelected}
                 isSelect={true}
-                ArrayData={TokensData}
+                ArrayData={ArrayData}
                 selectedName={selectedName}
                 setSelectedName={setSelectedName}
               />

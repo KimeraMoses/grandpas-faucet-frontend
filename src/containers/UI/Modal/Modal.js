@@ -20,7 +20,7 @@ export const ACTIONTYPE = {
 };
 
 const ModalComponent = (props) => {
-  const { open, setOpen, type, selected, setSelected,selectedName,setSelectedName } = props;
+  const { open, setOpen, type, selected, setSelected,selectedName,setSelectedName,ArrayData } = props;
   const handleClose = () => setOpen(false);
 
   return (
@@ -61,6 +61,7 @@ const ModalComponent = (props) => {
             selectedName={selectedName}
             setSelectedName={setSelectedName}
             setOpen={setOpen}
+            ArrayData={ArrayData}
             action="add"
             title="Add Token To Black List"
             description="Please select token from the dropdown menu to add it to blacklisted tokens."

@@ -2,7 +2,7 @@
   content: "";
   border-left: 0.8rem solid transparent;
   border-right: 0.8rem solid transparent;
-  border-bottom: 0.8rem solid #fff;
+  border-bottom: 0.8rem solid #262626;
   position: absolute;
   top: -13px;
   right: 3px;
@@ -17,6 +17,8 @@
 }
 .grandpa__logout_btn:hover{
   color: var(--primary__color);
+  background: rgb(79,191,135);
+  background: linear-gradient(90deg, rgba(79,191,135,0.25) 38%, rgba(38,38,38,1) 100%);
 }
 .grandpa__logout_btn svg{
   margin-right: 3px;

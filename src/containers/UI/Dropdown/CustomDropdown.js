@@ -10,18 +10,29 @@ import ArrowDropDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import classes from "./CustomDropdown.module.css";
 
 const CustomDropdown = (props) => {
-  const { selected, setSelected, ArrayData, isTokens,selectedName,setSelectedName } = props;
+  const {
+    setSelected,
+    ArrayData,
+    isTokens,
+    selectedName,
+    setSelectedName,
+    disabled,
+  } = props;
   const [isActive, setIsActive] = useState(false);
   const selectedItemHandler = (option) => {
     setSelected(isTokens ? option._id : option.address);
     setSelectedName(isTokens ? option.name : option.address);
     setIsActive(false);
   };
+  const onClikHandler = () => {
+    if (!disabled) {
+      setIsActive(!isActive);
+    } else {
+      setIsActive(false);
+    }
+  };
   return (
-    <div
-      className={classes.gpa__dropdown}
-      onClick={(e) => setIsActive(!isActive)}
-    >
+    <div className={classes.gpa__dropdown} onClick={onClikHandler}>
       <div className={classes.gpa__dropdown_button}>
         <div className={classes.gpa__dropdown_button_text}>{selectedName}</div>
         <div>{isActive ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}</div>
